@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بدّل صوتك — غيّر صوتك وأضف تأثيرات صوتية</title>
+<meta name="description" content="سجّل صوتك أو ارفع ملفًا، طبّق مؤثرات صوتية ممتعة، واستمع ونزّل النتيجة — كل ذلك داخل متصفحك.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ======================================================================
+   style.css — نظام التصميم والتنسيقات
+   (لفصل المشروع: انقل هذا القسم كاملًا إلى ملف style.css وأشر إليه)
+   ====================================================================== */
+:root{
+  --bg:#0e0c09;
+  --panel:#161210;
+  --panel2:#1c1712;
+  --line:#2c241b;
+  --line-soft:#241d16;
+  --ink:#f4eee3;
+  --muted:#9a8f7f;
+  --amber:#ffb224;
+  --amber-ink:#1c1204;
+  --amber-dim:#8a5f10;
+  --red:#ff4b3e;
+  --green:#57d99a;
+  --radius:16px;
+  --font-body:"IBM Plex Sans Arabic",sans-serif;
+  --font-display:"Lalezar",cursive;
+  --font-mono:"IBM Plex Mono",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:15.5px;
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1060px;margin-inline:auto;padding-inline:1.2rem}
+.mono{font-family:var(--font-mono)}
+.muted{color:var(--muted)}
+b,strong{font-weight:700}
+
+/* ---------- أيقونات ---------- */
+.ic{width:19px;height:19px;flex:none;display:inline-block;vertical-align:middle}
+.ic.lg{width:28px;height:28px}
+.ic.xs{width:14px;height:14px}
+
+/* ---------- الشريط العلوي ---------- */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(14,12,9,.88);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line-soft);
+}
+.bar-in{display:flex;align-items:center;gap:1.1rem;padding-block:.7rem}
+.brand{
+  display:flex;align-items:center;gap:.5rem;
+  font-family:var(--font-display);font-size:1.35rem;color:var(--ink);
+  text-decoration:none;letter-spacing:.01em;
+}
+.brand .ic{color:var(--amber);width:22px;height:22px}
+.privacy-chip{
+  display:flex;align-items:center;gap:.45rem;
+  margin-inline-start:auto;
+  font-size:.76rem;color:var(--muted);
+  border:1px solid var(--line);border-radius:99px;padding:.25rem .8rem;
+  white-space:nowrap;
+}
+.privacy-chip .pulse{
+  width:8px;height:8px;border-radius:50%;background:var(--green);flex:none;
+  animation:pulse 2.2s infinite;
+}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(87,217,154,.45)}55%{box-shadow:0 0 0 6px rgba(87,217,154,0)}}
+.nav-link{color:var(--muted);text-decoration:none;font-size:.86rem;transition:color .2s}
+.nav-link:hover{color:var(--amber)}
+
+/* ---------- البطل ---------- */
+.hero{
+  padding-block:4.2rem 3.4rem;
+  background-image:radial-gradient(#1c1712 1px,transparent 1.4px);
+  background-size:24px 24px;
+  border-bottom:1px solid var(--line-soft);
+}
+.hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:3.2rem;align-items:center}
+.kicker{
+  display:inline-flex;align-items:center;gap:.5rem;
+  color:var(--amber);font-size:.82rem;font-weight:600;letter-spacing:.04em;
+  border:1px solid var(--line);border-radius:99px;padding:.35rem .95rem;margin-bottom:1.4rem;
+}
+h1{
+  font-family:var(--font-display);font-weight:400;
+  font-size:clamp(3.1rem,7.5vw,5.4rem);
+  line-height:1.08;letter-spacing:.005em;
+}
+h1 em{font-style:normal;color:var(--amber)}
+.h1-wave{display:block;width:min(300px,70%);margin-top:.4rem;color:var(--amber-dim)}
+.hero p.lead{color:var(--muted);max-width:46ch;margin-top:1.1rem;font-size:1.02rem}
+.hero-actions{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:1.9rem}
+.privacy-line{
+  display:flex;align-items:center;gap:.5rem;
+  margin-top:1.4rem;font-size:.8rem;color:var(--muted);
+}
+.privacy-line .ic{color:var(--green)}
+
+/* ---------- الأزرار ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.55rem;
+  font-family:var(--font-body);font-weight:700;font-size:1rem;
+  border-radius:14px;border:none;cursor:pointer;
+  padding:.85rem 1.5rem;color:var(--ink);
+  transition:transform .12s,box-shadow .12s,background .2s,border-color .2s;
+  text-decoration:none;
+}
+.btn.primary{
+  background:var(--amber);color:var(--amber-ink);
+  box-shadow:0 4px 0 var(--amber-dim);
+}
+.btn.primary:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--amber-dim)}
+.btn.primary:active{transform:translateY(2px);box-shadow:0 1px 0 var(--amber-dim)}
+.btn.ghost{background:var(--panel2);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--amber-dim);color:var(--amber)}
+.btn.ghost.danger:hover{border-color:var(--red);color:var(--red)}
+.btn.sm{padding:.5rem .95rem;font-size:.85rem;border-radius:11px}
+.btn:disabled{opacity:.5;pointer-events:none}
+
+/* ---------- بطاقة مقياس VU ---------- */
+.meter-card{
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius);padding:1.1rem 1.2rem .7rem;
+}
+.meter-top{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:.78rem;color:var(--muted);letter-spacing:.06em;
+  border-bottom:1px dashed var(--line);padding-bottom:.55rem;margin-bottom:.3rem;
+}
+#vuState{font-family:var(--font-mono);color:var(--amber)}
+.meter-card svg{width:100%;height:auto;display:block}
+
+/* ---------- الأقسام ---------- */
+.sec{padding-block:2.6rem}
+.sec-head{display:flex;align-items:center;gap:1rem;margin-bottom:1.15rem;flex-wrap:wrap}
+h2{
+  font-family:var(--font-display);font-weight:400;font-size:1.7rem;
+  display:flex;align-items:baseline;gap:.7rem;
+}
+h2 i{
+  font-style:normal;font-family:var(--font-mono);font-size:.85rem;
+  color:var(--amber);border:1px solid var(--line);border-radius:8px;
+  padding:.1rem .5rem;transform:translateY(-4px);
+}
+.chip{
+  font-size:.75rem;color:var(--muted);border:1px solid var(--line);
+  border-radius:99px;padding:.2rem .8rem;
+}
+.chip.ok{color:var(--green);border-color:rgba(87,217,154,.35)}
+.panel{
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius);padding:1.3rem;
+  transition:opacity .35s;
+}
+#effects .panel.locked,#studio .panel.locked{
+  opacity:.4;pointer-events:none;user-select:none;
+}
+
+/* ---------- المصدر ---------- */
+.src-empty{
+  display:flex;flex-direction:column;align-items:center;gap:.7rem;
+  text-align:center;padding:1.8rem 1rem;color:var(--muted);
+}
+.src-empty .ic{width:44px;height:44px;color:#4a3f33}
+.src-file{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.src-info strong{display:block;font-size:1.02rem;overflow-wrap:anywhere}
+.src-info .mono{font-size:.8rem}
+.src-actions{display:flex;gap:.6rem;flex-wrap:wrap}
+
+/* ---------- المؤثرات ---------- */
+.fx-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;flex-wrap:wrap;
+  border-bottom:1px solid var(--line-soft);padding-bottom:.9rem;margin-bottom:1.15rem;
+}
+.fx-now{font-size:.9rem;color:var(--muted)}
+.fx-now b{color:var(--amber)}
+.fx-group{
+  display:grid;grid-template-columns:150px 1fr;gap:1.1rem;
+  padding-block:1.05rem;align-items:start;
+}
+.fx-group + .fx-group{border-top:1px dashed var(--line-soft)}
+.g-label{
+  font-size:.75rem;font-weight:600;color:var(--muted);
+  letter-spacing:.1em;padding-top:.55rem;
+  border-inline-start:2px solid var(--amber-dim);padding-inline-start:.7rem;
+}
+.g-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.6rem}
+.fx-btn{
+  display:flex;align-items:center;gap:.65rem;
+  background:var(--panel2);border:1px solid var(--line);border-radius:12px;
+  padding:.62rem .8rem;cursor:pointer;text-align:start;
+  color:var(--ink);font-family:var(--font-body);
+  transition:border-color .18s,background .18s;
+}
+.fx-btn:hover{border-color:var(--amber-dim)}
+.fx-btn .led{
+  width:8px;height:8px;border-radius:50%;background:#3a3128;flex:none;
+  transition:background .18s,box-shadow .18s;
+}
+.fx-btn .ic{color:var(--muted);transition:color .18s}
+.fx-btn .fx-t{display:flex;flex-direction:column;line-height:1.35;min-width:0}
+.fx-btn .fx-t b{font-size:.9rem;font-weight:600}
+.fx-btn .fx-t small{font-size:.7rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fx-btn.on{border-color:var(--amber);background:#241b0d}
+.fx-btn.on .led{background:var(--amber);box-shadow:0 0 7px rgba(255,178,36,.8)}
+.fx-btn.on .ic{color:var(--amber)}
+.fx-btn.on .fx-t b{color:var(--amber)}
+
+.fx-controls{
+  display:flex;gap:2.2rem;flex-wrap:wrap;
+  border-top:1px solid var(--line-soft);padding-top:1.15rem;margin-top:.4rem;
+}
+.ctrl{flex:1;min-width:230px}
+.ctrl label{
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-size:.82rem;color:var(--muted);margin-bottom:.45rem;
+}
+.ctrl label b{color:var(--amber);font-size:.9rem}
+input[type=range]{
+  width:100%;appearance:none;-webkit-appearance:none;height:6px;border-radius:99px;
+  background:#2c241b;outline:none;cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;
+  background:var(--amber);border:3px solid var(--bg);box-shadow:0 0 0 1px var(--amber-dim);
+}
+input[type=range]::-moz-range-thumb{
+  width:16px;height:16px;border-radius:50%;background:var(--amber);
+  border:3px solid var(--bg);box-shadow:0 0 0 1px var(--amber-dim);
+}
+
+/* ---------- الاستوديو ---------- */
+.studio-top{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;flex-wrap:wrap;margin-bottom:1.1rem;
+}
+.ab{display:inline-flex;border:1px solid var(--line);border-radius:11px;overflow:hidden}
+.ab-btn{
+  background:transparent;border:none;color:var(--muted);
+  font-family:var(--font-body);font-weight:600;font-size:.85rem;
+  padding:.5rem 1.15rem;cursor:pointer;transition:background .18s,color .18s;
+}
+.ab-btn + .ab-btn{border-inline-start:1px solid var(--line)}
+.ab-btn.on{background:var(--amber);color:var(--amber-ink)}
+.transport{display:flex;align-items:center;gap:1.1rem}
+.play-big{
+  width:66px;height:66px;border-radius:50%;flex:none;
+  background:transparent;border:2px solid var(--amber);color:var(--amber);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:background .18s,color .18s,transform .12s;
+}
+.play-big:hover{transform:scale(1.05)}
+.play-big.on{background:var(--amber);color:var(--amber-ink)}
+.tp-mid{flex:1;min-width:0}
+.wf{width:100%;height:56px;display:block;cursor:pointer;touch-action:none}
+.times{display:flex;gap:.5rem;font-size:.8rem;margin-top:.35rem}
+.spec{width:100%;height:120px;display:block;margin-top:1.1rem;background:var(--panel2);border-radius:12px;border:1px solid var(--line-soft)}
+.hint{
+  display:flex;align-items:center;gap:.45rem;
+  margin-top:.9rem;font-size:.78rem;color:var(--muted);
+}
+.hint .ic{color:var(--green)}
+
+/* ---------- كيف يعمل ---------- */
+.steps{border-bottom:1px solid var(--line-soft)}
+.step{
+  display:grid;grid-template-columns:100px 1fr;gap:1.4rem;align-items:start;
+  border-top:1px solid var(--line-soft);padding-block:1.5rem;
+}
+.step .num{
+  font-family:var(--font-display);font-size:3.2rem;line-height:1;color:var(--amber);
+}
+.step h3{font-size:1.08rem;margin-bottom:.25rem}
+.step p{color:var(--muted);font-size:.92rem;max-width:62ch}
+.step.privacy-note .num{color:var(--green)}
+.step.privacy-note h3{display:flex;align-items:center;gap:.5rem}
+.step.privacy-note .ic{color:var(--green)}
+
+/* ---------- التذييل ---------- */
+.footer{border-top:1px solid var(--line-soft);margin-top:1.5rem;padding-block:2rem}
+.foot-in{display:flex;align-items:flex-start;justify-content:space-between;gap:1.5rem;flex-wrap:wrap}
+.foot-lines p{font-size:.88rem;color:var(--muted)}
+.foot-lines .strong{color:var(--ink);font-weight:600;margin-top:.2rem}
+
+/* ---------- التسجيل (نافذة عائمة) ---------- */
+.overlay{
+  position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;
+  background:rgba(10,8,6,.72);backdrop-filter:blur(4px);padding:1.2rem;
+}
+.rec-card{
+  background:var(--panel);border:1px solid var(--line);border-radius:20px;
+  padding:2rem 2.4rem;text-align:center;min-width:min(340px,90vw);
+}
+.rec-dot{
+  width:14px;height:14px;border-radius:50%;background:var(--red);
+  margin:0 auto .8rem;animation:blink 1s infinite;
+}
+@keyframes blink{50%{opacity:.25}}
+.rec-title{font-size:.85rem;color:var(--muted);letter-spacing:.08em}
+.rec-time{font-family:var(--font-mono);font-size:2.6rem;font-weight:600;margin-block:.4rem .9rem}
+.rec-level{
+  height:8px;border-radius:99px;background:#2c241b;overflow:hidden;margin-bottom:1.6rem;
+}
+.rec-level i{
+  display:block;height:100%;width:2%;border-radius:99px;
+  background:var(--red);transition:width .1s linear;
+}
+.rec-actions{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
+.btn.rec-stop{background:var(--red);color:#fff;box-shadow:0 4px 0 #9c2a22}
+.btn.rec-stop:active{transform:translateY(2px);box-shadow:0 1px 0 #9c2a22}
+
+/* ---------- نافذة المعالجة ---------- */
+.busy-card{
+  display:flex;align-items:center;gap:1rem;
+  background:var(--panel);border:1px solid var(--line);border-radius:16px;
+  padding:1.1rem 1.6rem;
+}
+.spinner{
+  width:26px;height:26px;border-radius:50%;flex:none;
+  border:3px solid var(--line);border-top-color:var(--amber);
+  animation:spin .8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- التنبيهات ---------- */
+#toasts{
+  position:fixed;bottom:1.2rem;inset-inline-start:1.2rem;z-index:120;
+  display:flex;flex-direction:column;gap:.6rem;max-width:min(360px,88vw);
+}
+.toast{
+  background:var(--panel2);border:1px solid var(--line);
+  border-inline-start:3px solid var(--amber);
+  border-radius:12px;padding:.75rem 1.05rem;font-size:.87rem;
+  opacity:0;transform:translateY(8px);transition:all .3s;
+}
+.toast.show{opacity:1;transform:none}
+.toast.ok{border-inline-start-color:var(--green)}
+.toast.err{border-inline-start-color:var(--red)}
+.toast.warn{border-inline-start-color:var(--amber)}
+
+/* ---------- تجاوب ---------- */
+@media (max-width:900px){
+  .hero{padding-block:2.8rem 2.4rem}
+  .hero-grid{grid-template-columns:1fr;gap:2rem}
+  .meter-card{max-width:400px}
+}
+@media (max-width:640px){
+  .privacy-chip span{display:none}
+  .privacy-chip{padding:.25rem .55rem}
+  .hero-actions .btn{flex:1}
+  .fx-group{grid-template-columns:1fr;gap:.5rem}
+  .g-label{padding-top:0;border-inline-start:none;border-bottom:2px solid var(--amber-dim);padding-bottom:.35rem;padding-inline-start:0}
+  .step{grid-template-columns:64px 1fr;gap:.9rem}
+  .step .num{font-size:2.3rem}
+  .transport{flex-wrap:wrap}
+  .foot-in{flex-direction:column}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- ====== مكتبة الأيقونات (SVG Sprite) ====== -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/>
+  </symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+  </symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 20h16"/>
+  </symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 7h16"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/><path d="M6 7l1 13h10l1-13"/>
+  </symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>
+  </symbol>
+  <symbol id="i-wave" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 12h2l2-7 3 14 3-10 2 6 2-3h4"/>
+  </symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+    <path d="M6 6l12 12M18 6L6 18"/>
+  </symbol>
+  <symbol id="i-deep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+    <path d="M3 14c2-5 4-5 6 0s4 5 6 0 4-5 6 0"/>
+  </symbol>
+  <symbol id="i-sharp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 18L9 6l3 9 3-9 5 12"/>
+  </symbol>
+  <symbol id="i-robot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="5" y="8" width="14" height="10" rx="2"/>
+    <circle cx="9.5" cy="13" r="1" fill="currentColor" stroke="none"/>
+    <circle cx="14.5" cy="13" r="1" fill="currentColor" stroke="none"/>
+    <path d="M12 8V5"/><circle cx="12" cy="4" r="1"/>
+  </symbol>
+  <symbol id="i-kid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+    <circle cx="12" cy="12" r="8"/>
+    <circle cx="9.5" cy="10" r=".9" fill="currentColor" stroke="none"/>
+    <circle cx="14.5" cy="10" r=".9" fill="currentColor" stroke="none"/>
+    <path d="M9 14c1 1.4 5 1.4 6 0"/>
+  </symbol>
+  <symbol id="i-alien" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+    <circle cx="12" cy="12" r="5.5"/><ellipse cx="12" cy="12" rx="10" ry="3.2" transform="rotate(-18 12 12)"/>
+  </symbol>
+  <symbol id="i-echo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+    <circle cx="9" cy="12" r="2.2"/><path d="M14 8a6 6 0 0 1 0 8"/><path d="M17.5 5.5a10 10 0 0 1 0 13"/>
+  </symbol>
+  <symbol id="i-radio" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="9" width="16" height="11" rx="2"/><path d="M7 9l9-5"/>
+    <circle cx="15.5" cy="14.5" r="2.6"/><path d="M7 13h4M7 16h4"/>
+  </symbol>
+  <symbol id="i-mega" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 20V6"/><path d="M7 11l5-5 5 5"/><path d="M4 20h16"/>
+  </symbol>
+  <symbol id="i-slow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>
+  </symbol>
+  <symbol id="i-fast" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 5l7 7-7 7"/><path d="M12 5l7 7-7 7"/>
+  </symbol>
+  <symbol id="i-glitch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round">
+    <path d="M13 3L5 13h5l-1 8 8-11h-5z"/>
+  </symbol>
+  <symbol id="i-pitch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 19V7"/><path d="M5 10l3-3 3 3"/><path d="M16 5v12"/><path d="M13 14l3 3 3-3"/>
+  </symbol>
+</svg>
+
+<!-- ====== الشريط العلوي ====== -->
+<header class="topbar">
+  <div class="wrap bar-in">
+    <a class="brand" href="#"><svg class="ic"><use href="#i-wave"></use></svg><span>بدّل صوتك</span></a>
+    <span class="privacy-chip"><i class="pulse"></i><span>معالجة محلية 100% — لا يُرفع أي صوت إلى أي خادم</span></span>
+    <a class="nav-link" href="#how">كيف يعمل؟</a>
+  </div>
+</header>
+
+<main>
+  <!-- ====== البطل ====== -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="kicker"><svg class="ic"><use href="#i-wave"></use></svg> استوديو مؤثرات صوتية يعمل داخل متصفحك</span>
+        <h1>بدّل <em>صوتك</em><svg class="h1-wave" viewBox="0 0 220 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M2 12c8-9 16-9 24 0s16 9 24 0 16-9 24 0 16 9 24 0 16-9 24 0 16 9 24 0 16-9 24 0 16 9 24 0"/></svg></h1>
+        <p class="lead">سجّل صوتك أو ارفع ملفًا، ثم جرّب أكثر من اثني عشر تأثيرًا — من العميق الوقور إلى الفضائي الغامض — واستمع للنتيجة فورًا ونزّلها بضغطة واحدة.</p>
+        <div class="hero-actions">
+          <button class="btn primary" id="btnRecord"><svg class="ic"><use href="#i-mic"></use></svg>ابدأ تسجيل صوتك</button>
+          <button class="btn ghost" id="btnUpload"><svg class="ic"><use href="#i-folder"></use></svg>ارفع ملف صوتي</button>
+          <input type="file" id="fileInput" accept="audio/*,.mp3,.wav,.ogg,.m4a,.aac,.flac,.opus,.webm" hidden>
+        </div>
+        <p class="privacy-line"><svg class="ic xs"><use href="#i-lock"></use></svg>تتم المعالجة بالكامل محليًا داخل متصفحك — تسجيلك لا يغادر جهازك أبدًا.</p>
+      </div>
+      <div class="meter-card">
+        <div class="meter-top"><span>مقياس المستوى</span><span id="vuState">خمول</span></div>
+        <svg id="vuSvg" viewBox="0 0 240 158" aria-hidden="true"></svg>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <!-- ====== المصدر الصوتي ====== -->
+    <section class="sec" id="source">
+      <div class="sec-head">
+        <h2><i>٠١</i>المصدر الصوتي</h2>
+        <span class="chip" id="srcState">بانتظار الصوت</span>
+      </div>
+      <div class="panel">
+        <div id="srcEmpty" class="src-empty">
+          <svg class="ic"><use href="#i-wave"></use></svg>
+          <p>لا يوجد صوت بعد — سجّل من الميكروفون أو ارفع ملفًا<br><small>(MP3، WAV، OGG، M4A، FLAC…)</small></p>
+        </div>
+        <div id="srcFile" class="src-file" hidden>
+          <div class="src-info">
+            <strong id="srcName"></strong>
+            <span class="mono muted" id="srcMeta"></span>
+          </div>
+          <div class="src-actions">
+            <button class="btn ghost sm" id="srcPlay">
+              <svg class="ic" id="srcPlayIco"><use href="#i-play"></use></svg>
+              <span id="srcPlayLbl">سماع الأصل</span>
+            </button>
+            <button class="btn ghost sm danger" id="srcDelete"><svg class="ic"><use href="#i-trash"></use></svg>حذف</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== المؤثرات ====== -->
+    <section class="sec" id="effects">
+      <div class="sec-head">
+        <h2><i>٠٢</i>المؤثرات الصوتية</h2>
+        <span class="chip" id="fxState">بانتظار الصوت</span>
+      </div>
+      <div class="panel locked">
+        <div class="fx-bar">
+          <span class="fx-now">التأثير النشط: <b id="fxNowName">الأصل — بلا تأثير</b></span>
+          <button class="btn ghost sm" id="fxClear"><svg class="ic"><use href="#i-x"></use></svg>إلغاء التأثير</button>
+        </div>
+
+        <div class="fx-group">
+          <div class="g-label">الطبقة والزمن</div>
+          <div class="g-grid">
+            <button class="fx-btn" data-fx="deep"><span class="led"></span><svg class="ic"><use href="#i-deep"></use></svg><span class="fx-t"><b>صوت عميق</b><small>نبرة سميكة منخفضة</small></span></button>
+            <button class="fx-btn" data-fx="sharp"><span class="led"></span><svg class="ic"><use href="#i-sharp"></use></svg><span class="fx-t"><b>صوت حاد</b><small>نبرة رفيعة مرتفعة</small></span></button>
+            <button class="fx-btn" data-fx="kid"><span class="led"></span><svg class="ic"><use href="#i-kid"></use></svg><span class="fx-t"><b>صوت طفل</b><small>مرح ترفيهي غير واقعي</small></span></button>
+            <button class="fx-btn" data-fx="pitch"><span class="led"></span><svg class="ic"><use href="#i-pitch"></use></svg><span class="fx-t"><b>تغيير الطبقة</b><small>تحكّم يدوي بالطبقة</small></span></button>
+            <button class="fx-btn" data-fx="slow"><span class="led"></span><svg class="ic"><use href="#i-slow"></use></svg><span class="fx-t"><b>تأثير بطيء</b><small>كشريط كاسيت متأخر</small></span></button>
+            <button class="fx-btn" data-fx="fast"><span class="led"></span><svg class="ic"><use href="#i-fast"></use></svg><span class="fx-t"><b>تأثير سريع</b><small>إيقاع متسارع مضحك</small></span></button>
+          </div>
+        </div>
+
+        <div class="fx-group">
+          <div class="g-label">أجنبي عن البشر</div>
+          <div class="g-grid">
+            <button class="fx-btn" data-fx="robot"><span class="led"></span><svg class="ic"><use href="#i-robot"></use></svg><span class="fx-t"><b>روبوت</b><small>تعديل حلقي معدني</small></span></button>
+            <button class="fx-btn" data-fx="alien"><span class="led"></span><svg class="ic"><use href="#i-alien"></use></svg><span class="fx-t"><b>صوت فضائي</b><small>كائن من كوكب آخر</small></span></button>
+            <button class="fx-btn" data-fx="crush"><span class="led"></span><svg class="ic"><use href="#i-glitch"></use></svg><span class="fx-t"><b>تشويش إلكتروني</b><small>تفكيك رقمي قاسٍ</small></span></button>
+          </div>
+        </div>
+
+        <div class="fx-group">
+          <div class="g-label">المكان والصوتيات</div>
+          <div class="g-grid">
+            <button class="fx-btn" data-fx="echo"><span class="led"></span><svg class="ic"><use href="#i-echo"></use></svg><span class="fx-t"><b>صدى Echo</b><small>تكرارات متلاشية</small></span></button>
+            <button class="fx-btn" data-fx="radio"><span class="led"></span><svg class="ic"><use href="#i-radio"></use></svg><span class="fx-t"><b>راديو قديم</b><small>بث AM مع ضجيج</small></span></button>
+            <button class="fx-btn" data-fx="mega"><span class="led"></span><svg class="ic"><use href="#i-mega"></use></svg><span class="fx-t"><b>صوت مضخم</b><small>ضغط ورفع مستوى</small></span></button>
+          </div>
+        </div>
+
+        <div class="fx-controls">
+          <div class="ctrl">
+            <label>شدة التأثير <b class="mono" id="fxIntensityVal">60%</b></label>
+            <input type="range" id="fxIntensity" min="0" max="100" value="60">
+          </div>
+          <div class="ctrl" id="pitchRow" hidden>
+            <label>طبقة الصوت (نصف درجة) <b class="mono" id="fxPitchVal">0</b></label>
+            <input type="range" id="fxPitch" min="-12" max="12" step="1" value="0">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== الاستوديو والتنزيل ====== -->
+    <section class="sec" id="studio">
+      <div class="sec-head">
+        <h2><i>٠٣</i>الاستوديو والتنزيل</h2>
+        <span class="chip" id="studioState">بانتظار الصوت</span>
+      </div>
+      <div class="panel locked">
+        <div class="studio-top">
+          <div class="ab" role="group" aria-label="مقارنة الأصل بالمعالَج">
+            <button class="ab-btn on" data-mode="processed">المعالَج</button>
+            <button class="ab-btn" data-mode="original">الأصل</button>
+          </div>
+          <button class="btn primary sm" id="btnDownload"><svg class="ic"><use href="#i-download"></use></svg>تنزيل الصوت (WAV)</button>
+        </div>
+        <div class="transport">
+          <button class="play-big" id="btnPlay" aria-label="تشغيل">
+            <svg class="ic lg" id="icoPlay"><use href="#i-play"></use></svg>
+            <svg class="ic lg" id="icoStop" hidden><use href="#i-stop"></use></svg>
+          </button>
+          <div class="tp-mid">
+            <canvas id="wf" class="wf" aria-label="شريط الموجة الصوتية — اسحب للتنقل"></canvas>
+            <div class="times mono">
+              <span id="timeNow">0:00</span><span class="muted">/</span><span id="timeTotal" class="muted">0:00</span>
+            </div>
+          </div>
+        </div>
+        <canvas id="spec" class="spec" aria-hidden="true"></canvas>
+        <p class="hint"><svg class="ic xs"><use href="#i-lock"></use></svg>جرّب التأثير بالتشغيل هنا قبل التنزيل — التنزيل يعالج الملف كاملًا داخل متصفحك ويحفظه بصيغة WAV بدون أي خادم.</p>
+      </div>
+    </section>
+
+    <!-- ====== كيف يعمل ====== -->
+    <section class="sec" id="how">
+      <div class="sec-head"><h2><i>٠٤</i>كيف يعمل الموقع؟</h2></div>
+      <div class="steps">
+        <div class="step">
+          <div class="num">١</div>
+          <div><h3>سجّل أو ارفع</h3><p>اضغط «ابدأ تسجيل صوتك» ليطلب المتصفح إذن الميكروفون مع عداد زمني حي، أو ارفع أي ملف صوتي من جهازك مباشرة.</p></div>
+        </div>
+        <div class="step">
+          <div class="num">٢</div>
+          <div><h3>اختر تأثيرًا واضبط شدته</h3><p>أكثر من اثني عشر تأثيرًا تُبنى لحظيًا بسلاسل معالجة Web Audio حقيقية — مع شريط شدة لكل تأثير وشريط طبقة صوت دقيق بأنصاف الدرجات.</p></div>
+        </div>
+        <div class="step">
+          <div class="num">٣</div>
+          <div><h3>قارن، استمع، ثم نزّل</h3><p>بدّل بين «الأصل» و«المعالَج» في أي لحظة للمقارنة، وعند الرضا اضغط تنزيل ليعالج الملف كاملًا محليًا ويُحفظ بصيغة WAV عالية الجودة.</p></div>
+        </div>
+        <div class="step privacy-note">
+          <div class="num">✓</div>
+          <div><h3><svg class="ic"><use href="#i-lock"></use></svg>خصوصيتك أولًا</h3><p>كل المعالجة — من التسجيل حتى ملف WAV النهائي — تحدث داخل متصفحك. لا يُرفع أي صوت إلى أي خادم، ولم تُبنَ الصفحة أصلًا بحاجة إلى خادم.</p></div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- ====== التذييل ====== -->
+<footer class="footer">
+  <div class="wrap foot-in">
+    <div class="brand"><svg class="ic"><use href="#i-wave"></use></svg><span>بدّل صوتك</span></div>
+    <div class="foot-lines">
+      <p>بدّل صوتك — مشروع حازم أحمد 2026</p>
+      <p class="strong">© 2026 حازم أحمد — جميع الحقوق محفوظة</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ====== نافذة التسجيل ====== -->
+<div class="overlay" id="recOverlay" hidden>
+  <div class="rec-card" role="dialog" aria-label="جارٍ التسجيل">
+    <div class="rec-dot"></div>
+    <div class="rec-title">جارٍ التسجيل من الميكروفون</div>
+    <div class="rec-time" id="recTime">00:00.0</div>
+    <div class="rec-level"><i id="recLevel"></i></div>
+    <div class="rec-actions">
+      <button class="btn rec-stop" id="btnRecStop"><svg class="ic"><use href="#i-stop"></use></svg>إيقاف وحفظ</button>
+      <button class="btn ghost sm" id="btnRecCancel"><svg class="ic"><use href="#i-x"></use></svg>إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- ====== نافذة المعالجة ====== -->
+<div class="overlay" id="busyOv" hidden>
+  <div class="busy-card">
+    <div class="spinner"></div>
+    <span id="busyTxt">جارٍ المعالجة…</span>
+  </div>
+</div>
+
+<div id="toasts" aria-live="polite"></div>
+
+<script>
+/* ======================================================================
+   script.js — منطق التطبيق بالكامل
+   (لفصل المشروع: انقل هذا القسم كاملًا إلى ملف script.js وأشر إليه)
+   --------------------------------------------------------------------
+   الأقسام:
+   1) أدوات مساعدة        2) الحالة العامة       3) محرك الصوت (Web Audio)
+   4) سجل المؤثرات        5) المشغل              6) المصدر (رفع/حذف)
+   7) التسجيل             8) التنزيل (WAV)        9) الواجهة والرسم
+   ====================================================================== */
+
+/* ---------- 1) أدوات مساعدة ---------- */
+const $  = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const clamp = (v,a,b) => v < a ? a : v > b ? b : v;
+const debounce = (fn,ms) => { let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a),ms); }; };
+function fmt(t){ t=Math.max(0,t||0); return Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0'); }
+function fmtRec(t){ const m=Math.floor(t/60), s=Math.floor(t%60), d=Math.floor((t%1)*10);
+  return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')+'.'+d; }
+function toast(msg, kind='ok', ms=3400){
+  const el=document.createElement('div'); el.className='toast '+kind; el.textContent=msg;
+  $('#toasts').appendChild(el);
+  requestAnimationFrame(()=>el.classList.add('show'));
+  setTimeout(()=>{ el.classList.remove('show'); setTimeout(()=>el.remove(),320); }, ms);
+}
+
+/* ---------- عناصر الواجهة ---------- */
+const el = {
+  btnRecord:$('#btnRecord'), btnUpload:$('#btnUpload'), fileInput:$('#fileInput'),
+  vuSvg:$('#vuSvg'), vuState:$('#vuState'),
+  srcEmpty:$('#srcEmpty'), srcFile:$('#srcFile'), srcName:$('#srcName'), srcMeta:$('#srcMeta'),
+  srcPlay:$('#srcPlay'), srcPlayUse:$('#srcPlayIco use'), srcPlayLbl:$('#srcPlayLbl'), srcDelete:$('#srcDelete'),
+  fxState:$('#fxState'), fxNowName:$('#fxNowName'), fxClear:$('#fxClear'),
+  fxIntensity:$('#fxIntensity'), fxIntensityVal:$('#fxIntensityVal'),
+  pitchRow:$('#pitchRow'), fxPitch:$('#fxPitch'), fxPitchVal:$('#fxPitchVal'),
+  studioState:$('#studioState'), btnDownload:$('#btnDownload'),
+  btnPlay:$('#btnPlay'), icoPlay:$('#icoPlay'), icoStop:$('#icoStop'),
+  timeNow:$('#timeNow'), timeTotal:$('#timeTotal'), wf:$('#wf'), spec:$('#spec'),
+  recOverlay:$('#recOverlay'), recTime:$('#recTime'), recLevel:$('#recLevel'),
+  btnRecStop:$('#btnRecStop'), btnRecCancel:$('#btnRecCancel'),
+  busyOv:$('#busyOv'), busyTxt:$('#busyTxt'), toasts:$('#toasts')
+};
+
+/* ---------- 2) الحالة العامة ---------- */
+const state = {
+  buffer:null, peaks:null, sourceName:'',
+  effectId:null, intensity:0.6, pitchSemitones:0,
+  mode:'processed',               // 'processed' | 'original' (مقارنة A/B)
+  playing:false, srcNode:null, chain:null, rate:1,
+  startCtxTime:0, startOffset:0,  // لحظة بدء التشغيل في ساعة السياق + موضع البداية
+  pendingOffset:0, lastPos:0,     // موضع معلّق قبل التشغيل + آخر موضع (للشريط)
+  rec:{ active:false, recorder:null, analyser:null, start:0, cancelled:false }
+};
+
+/* ---------- 3) محرك الصوت ---------- */
+let actx=null, masterGain=null, masterAnalyser=null;
+let tdBuf=null, tdBufS=null, fdBuf=null, barRanges=null;
+
+function ensureCtx(){
+  if (actx) return actx;
+  actx = new (window.AudioContext || window.webkitAudioContext)();
+  masterGain = actx.createGain();
+  masterAnalyser = actx.createAnalyser();
+  masterAnalyser.fftSize = 2048;
+  masterAnalyser.smoothingTimeConstant = 0.78;
+  masterGain.connect(masterAnalyser);
+  masterAnalyser.connect(actx.destination);
+  buildBarRanges();
+  ensureWorklet(actx);          // تسجيل Bitcrusher (لا ننتظره — يوجد بديل)
+  return actx;
+}
+
+/* --- Bitcrusher عبر AudioWorklet (يُعرَّف من نص مضمّن) --- */
+const WORKLET_CODE = `
+class CrushProcessor extends AudioWorkletProcessor {
+  static get parameterDescriptors(){
+    return [
+      {name:'bits', defaultValue:8, minValue:1, maxValue:16, automationRate:'k-rate'},
+      {name:'reduction', defaultValue:2, minValue:1, maxValue:64, automationRate:'k-rate'}
+    ];
+  }
+  constructor(){ super(); this.hold=0; this.count=0; }
+  process(inputs, outputs, p){
+    const inp=inputs[0], out=outputs[0];
+    if(!inp || inp.length===0) return true;          // صمت عند غياب المدخل
+    const bits=p.bits[0], red=Math.max(1,Math.round(p.reduction[0]));
+    const steps=Math.pow(2,bits)-1;
+    const src=inp[0], o0=out[0];
+    for(let i=0;i<o0.length;i++){
+      if(this.count<=0){
+        let x=src?src[i]:0;
+        x=Math.round((x*0.5+0.5)*steps)/steps*2-1;   // تكميم عمق البت
+        this.hold=x; this.count=red;                 // تثبيت العينة (downsample)
+      }
+      o0[i]=this.hold; this.count--;
+    }
+    for(let ch=1;ch<out.length;ch++) out[ch].set(o0);
+    return true;
+  }
+}
+registerProcessor('crush', CrushProcessor);`;
+const workletURL = URL.createObjectURL(new Blob([WORKLET_CODE], {type:'application/javascript'}));
+function ensureWorklet(ctx){
+  if(!ctx.audioWorklet) return Promise.resolve(false);
+  if(ctx.__wl) return ctx.__wl;
+  ctx.__wl = ctx.audioWorklet.addModule(workletURL)
+    .then(()=>{ ctx.__workletReady = true; return true; })
+    .catch(()=>false);
+  return ctx.__wl;
+}
+
+/* --- عُقد بناء مساعدة (تصلح للسياق الحيّ وسياق المعالجة دون اتصال) --- */
+function gainNode(ctx,v){ const g=ctx.createGain(); g.gain.value=v; return g; }
+
+// حافلة مزج: مسار جاف + نقطة دخول للمسار المعالَج
+function mixBus(ctx, wet){
+  const input=ctx.createGain(), output=ctx.createGain();
+  const dry=gainNode(ctx, 1-wet), wetG=gainNode(ctx, wet);
+  input.connect(dry).connect(output);
+  wetG.connect(output);
+  return { input, output, wetIn:wetG };
+}
+
+// إزاحة طبقة حقيقية (granular) بخطّي تأخير متناوبين — دون تغيير السرعة
+function pitchShifter(ctx, semitones){
+  const g = ctx.createGain();
+  if (Math.abs(semitones) < 0.01) return { input:g, output:g, stops:[] };
+  const shift = Math.pow(2, semitones/12);
+  const win = 0.05;                             // نطاق التأخير بالثواني
+  const modRate = Math.abs(1-shift)/win;        // تردد مُعدِّل التأخير
+  const up = shift < 1;                         // تنزيل الطبقة => التأخير يصعد
+  const sr = ctx.sampleRate;
+
+  // مصدر طور: دورة منشارية صاعدة 0→1 في بافر صغير يُعاد
+  const ph = ctx.createBuffer(1, 256, sr);
+  const pd = ph.getChannelData(0);
+  for(let i=0;i<256;i++) pd[i]=i/256;
+  // منحنى التبادل: 0.5-0.5cos => مجموع القناتين = 1 دومًا
+  const envCurve = new Float32Array(256);
+  for(let i=0;i<256;i++) envCurve[i] = 0.5 - 0.5*Math.cos(2*Math.PI*(i/256));
+
+  const mkPhase=()=>{ const s=ctx.createBufferSource(); s.buffer=ph; s.loop=true; s.playbackRate.value=modRate; return s; };
+  const phA=mkPhase(), phB=mkPhase();
+
+  const envShaper=ctx.createWaveShaper(); envShaper.curve=envCurve; envShaper.oversample='none';
+
+  const dA=ctx.createDelay(win+0.05), dB=ctx.createDelay(win+0.05);
+  dA.delayTime.value = up ? 0 : win;
+  dB.delayTime.value = up ? 0 : win;
+  const mA=ctx.createGain(), mB=ctx.createGain();
+  mA.gain.value = mB.gain.value = up ? win : -win;
+  phA.connect(mA).connect(dA.delayTime);
+  phB.connect(mB).connect(dB.delayTime);
+
+  const eA=ctx.createGain(), eB=ctx.createGain();
+  eA.gain.value = eB.gain.value = 0;
+  phA.connect(envShaper); envShaper.connect(eA.gain);
+  phB.connect(envShaper); envShaper.connect(eB.gain);
+
+  const input=ctx.createGain(), output=ctx.createGain();
+  input.connect(dA); dA.connect(eA).connect(output);
+  input.connect(dB); dB.connect(eB).connect(output);
+
+  const t0=ctx.currentTime;
+  phA.start(t0, 0);
+  phB.start(t0, 0.5/modRate);                   // إزاحة نصف دورة للتناوب
+  return { input, output, stops:[()=>{ try{phA.stop();phB.stop();}catch(e){} }] };
+}
+
+// تعديل حلقي (Ring Modulation) — قلب صوت الروبوت والفضائي
+function ringMod(ctx, freq, mix){
+  const input=ctx.createGain(), output=ctx.createGain();
+  const mod=ctx.createGain(); mod.gain.value=0;
+  const osc=ctx.createOscillator(); osc.type='triangle'; osc.frequency.value=freq;
+  osc.connect(mod.gain); osc.start();
+  const wet=gainNode(ctx,mix), dry=gainNode(ctx,1-mix*0.45);
+  input.connect(mod); mod.connect(wet).connect(output);
+  input.connect(dry).connect(output);
+  return { input, output, stops:[()=>{ try{osc.stop();}catch(e){} }] };
+}
+
+// فايبراتو: تأخير مُتذبذب يغيّر الطبلة ذهابًا وإيابًا
+function vibrato(ctx, depthSec, rateHz){
+  const d=ctx.createDelay(0.2); d.delayTime.value=depthSec;
+  const osc=ctx.createOscillator(); osc.frequency.value=rateHz;
+  const g=ctx.createGain(); g.gain.value=depthSec*0.9;
+  osc.connect(g).connect(d.delayTime); osc.start();
+  return { input:d, output:d, stops:[()=>{ try{osc.stop();}catch(e){} }] };
+}
+
+// منحنى تشبع (TanH) لصوت الراديو المُشبع
+function saturateCurve(amount){
+  const k=1+amount*18, n=1024, c=new Float32Array(n);
+  for(let i=0;i<n;i++){ const x=i/(n-1)*2-1; c[i]=Math.tanh(k*x)/Math.tanh(k); }
+  return c;
+}
+
+// ضجيج خلفية (هسيس الراديو)
+function noiseSource(ctx, level){
+  const len=ctx.sampleRate, buf=ctx.createBuffer(1,len,ctx.sampleRate);
+  const d=buf.getChannelData(0);
+  for(let i=0;i<len;i++) d[i]=Math.random()*2-1;
+  const s=ctx.createBufferSource(); s.buffer=buf; s.loop=true;
+  const g=ctx.createGain(); g.gain.value=level;
+  s.connect(g); s.start();
+  return { node:g, dispose(){ try{s.stop();}catch(e){} } };
+}
+
+// بديل تكميم بسيط عندما لا يتاح AudioWorklet
+function crushCurve(bits){
+  const steps=Math.pow(2,bits)-1, n=2048, c=new Float32Array(n);
+  for(let i=0;i<n;i++){ const x=i/(n-1)*2-1; c[i]=Math.round((x*0.5+0.5)*steps)/steps*2-1; }
+  return c;
+}
+
+function dryChain(ctx){ const g=ctx.createGain(); return { input:g, output:g, stops:[] }; }
+function disposeChain(chain){ (chain.stops||[]).forEach(f=>{ try{f();}catch(e){} }); }
+
+/* ---------- 4) سجل المؤثرات ----------
+   كل تأثير يبني سلسلة معالجة مستقلة تعمل في أي AudioContext
+   (الحيّ للمعاينة، وOfflineAudioContext للتنزيل) — نقطة توسّع
+   مستقبلية: يمكن استبدال build() بنداء Backend للمعالجة المتقدمة. */
+const EFFECTS = {
+  deep:{ name:'صوت عميق', file:'deep', tail:0.15,
+    build(ctx,i){
+      const bus=mixBus(ctx, 0.25+0.75*i);
+      const ps=pitchShifter(ctx, -(5+2.5*i));
+      const lp=ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=4200-2200*i;
+      bus.input.connect(ps.input); ps.output.connect(lp); lp.connect(bus.wetIn);
+      return { input:bus.input, output:bus.output, stops:ps.stops };
+    }},
+  sharp:{ name:'صوت حاد', file:'sharp', tail:0.12,
+    build(ctx,i){
+      const bus=mixBus(ctx, 0.25+0.75*i);
+      const ps=pitchShifter(ctx, 4+2.5*i);
+      const hp=ctx.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=220;
+      const pk=ctx.createBiquadFilter(); pk.type='peaking'; pk.frequency.value=3200; pk.Q.value=1; pk.gain.value=4;
+      bus.input.connect(ps.input); ps.output.connect(hp); hp.connect(pk); pk.connect(bus.wetIn);
+      return { input:bus.input, output:bus.output, stops:ps.stops };
+    }},
+  kid:{ name:'صوت طفل', file:'kid', tail:0.12,
+    build(ctx,i){
+      const bus=mixBus(ctx, 0.3+0.7*i);
+      const ps=pitchShifter(ctx, 7+3*i);
+      const hp=ctx.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=350;
+      const sat=ctx.createWaveShaper(); sat.curve=saturateCurve(0.25);
+      bus.input.connect(ps.input); ps.output.connect(hp); hp.connect(sat); sat.connect(bus.wetIn);
+      return { input:bus.input, output:bus.output, stops:ps.stops };
+    }},
+  pitch:{ name:'تغيير الطبقة', file:'pitch', tail:0.12,
+    build(ctx,i){
+      const bus=mixBus(ctx, 0.3+0.7*i);
+      const ps=pitchShifter(ctx, state.pitchSemitones);
+      bus.input.connect(ps.input); ps.output.connect(bus.wetIn);
+      return { input:bus.input, output:bus.output, stops:ps.stops };
+    }},
+  slow:{ name:'تأثير بطيء', file:'slow', tail:0.1,
+    rate:i=>0.85-0.25*i,
+    build(ctx){ return dryChain(ctx); }},
+  fast:{ name:'تأثير سريع', file:'fast', tail:0.1,
+    rate:i=>1.15+0.35*i,
+    build(ctx){ return dryChain(ctx); }},
+  robot:{ name:'روبوت', file:'robot', tail:0.1,
+    build(ctx,i){
+      const bus=mixBus(ctx, 0.45+0.5*i);
+      const rm=ringMod(ctx, 40+35*i, 1);
+      const hp=ctx.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=180;
+      const lp=ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=3200;
+      bus.input.connect(rm.input); rm.output.connect(hp); hp.connect(lp); lp.connect(bus.wetIn);
+      return { input:bus.input, output:bus.output, stops:rm.stops };
+    }},
+  alien:{ name:'صوت فضائي', file:'alien', tail:0.12,
+    build(ctx,i){
+      const bus=mixBus(ctx, 0.6+0.4*i);
+      const vb=vibrato(ctx, 0.003+0.003*i, 5+4*i);
+      const rm=ringMod(ctx, 110+70*i, 0.9);
+      const bp=ctx.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=900+400*i; bp.Q.value=1.1;
+      bus.input.connect(vb.input); vb.output.connect(rm.input); rm.output.connect(bp); bp.connect(bus.wetIn);
+      return { input:bus.input, output:bus.output, stops:[...vb.stops,...rm.stops] };
+    }},
+  crush:{ name:'تشويش إلكتروني', file:'crush', tail:0.06,
+    build(ctx,i){
+      const input=ctx.createGain(), output=ctx.createGain();
+      const bits=10-6*i, red=1+9*i;
+      let node;
+      if (ctx.__workletReady && window.AudioWorkletNode){
+        node=new AudioWorkletNode(ctx,'crush',{outputChannelCount:[2]});
+        node.parameters.get('bits').value=bits;
+        node.parameters.get('reduction').value=red;
+      } else {
+        node=ctx.createWaveShaper(); node.curve=crushCurve(Math.max(2,bits));
+      }
+      const dry=gainNode(ctx,1-i), wet=gainNode(ctx,i);
+      input.connect(dry).connect(output);
+      input.connect(node); node.connect(wet).connect(output);
+      return { input, output, stops:[] };
+    }},
+  echo:{ name:'صدى Echo', file:'echo',
+    tail:()=>0.4+state.intensity*1.4,
+    build(ctx,i){
+      const input=ctx.createGain(), output=ctx.createGain();
+      const d=ctx.createDelay(2); d.delayTime.value=0.18+0.14*i;
+      const fb=gainNode(ctx, 0.15+0.45*i);
+      const tone=ctx.createBiquadFilter(); tone.type='lowpass'; tone.frequency.value=3200;
+      const wet=gainNode(ctx, 0.25+0.65*i), dry=gainNode(ctx, 0.9);
+      input.connect(dry).connect(output);
+      input.connect(d); d.connect(tone); tone.connect(fb); fb.connect(d);
+      tone.connect(wet); wet.connect(output);
+      return { input, output, stops:[] };
+    }},
+  radio:{ name:'راديو قديم', file:'radio', tail:0.1,
+    build(ctx,i){
+      const bus=mixBus(ctx, 0.55+0.45*i);
+      const hp=ctx.createBiquadFilter(); hp.type='highpass'; hp.frequency.value=480;
+      const lp=ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=2600;
+      const sat=ctx.createWaveShaper(); sat.curve=saturateCurve(0.35+0.4*i);
+      bus.input.connect(hp); hp.connect(lp); lp.connect(sat); sat.connect(bus.wetIn);
+      const n=noiseSource(ctx, 0.015+0.05*i); n.node.connect(bus.wetIn);
+      return { input:bus.input, output:bus.output, stops:[n.dispose] };
+    }},
+  mega:{ name:'صوت مضخم', file:'mega', tail:0.1,
+    build(ctx,i){
+      const input=ctx.createGain(), output=ctx.createGain();
+      const comp=ctx.createDynamicsCompressor();
+      comp.threshold.value=-24-14*i; comp.knee.value=8;
+      comp.ratio.value=6+6*i; comp.attack.value=0.004; comp.release.value=0.18;
+      const boost=gainNode(ctx, 1+2.2*i);
+      const lim=ctx.createDynamicsCompressor();
+      lim.threshold.value=-3; lim.knee.value=0; lim.ratio.value=20;
+      lim.attack.value=0.002; lim.release.value=0.1;
+      input.connect(comp); comp.connect(boost); boost.connect(lim); lim.connect(output);
+      return { input, output, stops:[] };
+    }}
+};
+
+function currentRate(){
+  if(state.mode!=='processed' || !state.effectId) return 1;
+  const eff=EFFECTS[state.effectId];
+  return eff.rate ? eff.rate(state.intensity) : 1;
+}
+function currentTail(){
+  if(state.mode!=='processed' || !state.effectId) return 0.05;
+  const eff=EFFECTS[state.effectId];
+  return typeof eff.tail==='function' ? eff.tail() : (eff.tail||0.08);
+}
+
+/* ---------- 5) المشغل ---------- */
+function startPlayback(fromPos){
+  if(!state.buffer) return;
+  const ctx=ensureCtx();
+  ctx.resume().catch(()=>{});
+  stopPlayback(true);
+  const rate=currentRate();
+  const chain = (state.mode==='processed' && state.effectId)
+    ? EFFECTS[state.effectId].build(ctx, state.intensity, state.pitchSemitones)
+    : dryChain(ctx);
+  const src=ctx.createBufferSource();
+  src.buffer=state.buffer;
+  src.playbackRate.value=rate;
+  src.connect(chain.input);
+  chain.output.connect(masterGain);
+  const pos=clamp(fromPos||0, 0, Math.max(0, state.buffer.duration-0.01));
+  src.onended=()=>{ if(src.__stopped) return;      // تجاهل الإيقاف اليدوي
+    state.playing=false; state.pendingOffset=0; state.lastPos=0;
+    disposeChain(chain); state.chain=null; state.srcNode=null; syncTransport(); };
+  src.start(0, pos);
+  src.__stopped=false;
+  state.srcNode=src; state.chain=chain; state.playing=true; state.rate=rate;
+  state.startCtxTime=ctx.currentTime; state.startOffset=pos;
+  syncTransport();
+}
+function stopPlayback(silent=false){
+  if(state.srcNode){ state.srcNode.__stopped=true; try{ state.srcNode.stop(); }catch(e){} }
+  if(state.chain) disposeChain(state.chain);
+  state.chain=null; state.srcNode=null;
+  if(state.playing && !silent) state.pendingOffset=state.lastPos;
+  state.playing=false;
+  syncTransport();
+}
+function setMode(m){
+  if(!state.buffer || state.mode===m) return;
+  state.mode=m; syncModeUI();
+  if(state.playing) startPlayback(state.lastPos);
+}
+
+/* ---------- 6) المصدر: رفع / تعيين / حذف ---------- */
+function computePeaks(buffer, count){
+  const ch=buffer.getChannelData(0);
+  const block=Math.max(1, Math.floor(ch.length/count));
+  const peaks=new Float32Array(count);
+  for(let i=0;i<count;i++){
+    let m=0; const s=i*block;
+    for(let j=0;j<block;j+=16){ const v=Math.abs(ch[s+j]||0); if(v>m) m=v; }
+    peaks[i]=m;
+  }
+  return peaks;
+}
+function setSource(buf, name){
+  stopPlayback(true);
+  state.buffer=buf; state.sourceName=name;
+  state.pendingOffset=0; state.lastPos=0;
+  state.peaks=computePeaks(buf, 700);
+  state.mode = state.effectId ? 'processed' : 'original';
+  el.srcEmpty.hidden=true; el.srcFile.hidden=false;
+  el.srcName.textContent=name;
+  el.srcMeta.textContent=`${fmt(buf.duration)} · ${buf.numberOfChannels>1?'ستيريو':'أحادي'} · ${(buf.sampleRate/1000).toFixed(1)} kHz`;
+  el.timeTotal.textContent=fmt(buf.duration);
+  [el.fxState, el.studioState].forEach(c=>{ c.textContent='جاهز'; c.classList.add('ok'); });
+  $('#effects .panel').classList.remove('locked');
+  $('#studio .panel').classList.remove('locked');
+  syncModeUI(); fitCanvases();
+  toast('الصوت جاهز — اختر تأثيرًا واضغط تشغيل','ok');
+}
+function clearSource(){
+  stopPlayback(true);
+  state.buffer=null; state.peaks=null;
+  el.srcEmpty.hidden=false; el.srcFile.hidden=true;
+  el.timeTotal.textContent='0:00'; el.timeNow.textContent='0:00';
+  [el.fxState, el.studioState].forEach(c=>{ c.textContent='بانتظار الصوت'; c.classList.remove('ok'); });
+  $('#effects .panel').classList.add('locked');
+  $('#studio .panel').classList.add('locked');
+  toast('تم حذف المصدر الصوتي');
+}
+async function loadFile(file){
+  const okType = /audio|video/.test(file.type) || /\.(mp3|wav|ogg|oga|m4a|aac|flac|opus|webm)$/i.test(file.name);
+  if(!okType){ toast('الرجاء اختيار ملف صوتي صالح','warn'); return; }
+  busy(true,'جارٍ قراءة الملف…');
+  try{
+    const ctx=ensureCtx();
+    const ab=await file.arrayBuffer();
+    const buf=await ctx.decodeAudioData(ab);
+    setSource(buf, file.name);
+  }catch(e){
+    console.error(e);
+    toast('تعذّر فك ترميز هذا الملف — جرّب صيغة أخرى مثل MP3 أو WAV','err');
+  }
+  busy(false);
+}
+
+/* ---------- 7) التسجيل ---------- */
+async function startRecording(){
+  if(state.rec.active) return;
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    toast('متصفحك لا يدعم الوصول للميكروفون','err'); return;
+  }
+  if(!window.MediaRecorder){ toast('متصفحك لا يدعم التسجيل — جرّب Chrome أو Firefox حديث','err'); return; }
+  stopPlayback(true);
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});
+    const ctx=ensureCtx(); ctx.resume().catch(()=>{});
+    const an=ctx.createAnalyser(); an.fftSize=512;
+    ctx.createMediaStreamSource(stream).connect(an);   // للتحليل فقط — لا يُسمع
+    const mimes=['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg;codecs=opus'];
+    const mt=mimes.find(m=>MediaRecorder.isTypeSupported(m));
+    const rec=new MediaRecorder(stream, mt?{mimeType:mt}:undefined);
+    const chunks=[];
+    rec.ondataavailable=e=>{ if(e.data && e.data.size) chunks.push(e.data); };
+    rec.onstop=()=>{
+      stream.getTracks().forEach(t=>t.stop());
+      hideRec();
+      if(state.rec.cancelled){ state.rec.active=false; syncTransport(); toast('أُلغي التسجيل','warn'); return; }
+      state.rec.active=false; syncTransport();
+      finalizeRecording(chunks);
+    };
+    rec.start(120);
+    state.rec={active:true, recorder:rec, analyser:an, start:performance.now(), cancelled:false};
+    el.recOverlay.hidden=false;
+    syncTransport();
+  }catch(err){
+    const msg = err && err.name==='NotAllowedError' ? 'رُفض إذن الميكروفون — اسمح بالوصول من إعدادات المتصفح'
+              : err && err.name==='NotFoundError'   ? 'لم يُعثر على ميكروفون متصل'
+              : 'تعذّر بدء التسجيل: '+(err && err.message || '');
+    toast(msg,'err');
+  }
+}
+function stopRecording(){ if(state.rec.active){ el.recOverlay.hidden=true; state.rec.recorder.stop(); } }
+function cancelRecording(){ if(state.rec.active){ state.rec.cancelled=true; el.recOverlay.hidden=true; state.rec.recorder.stop(); } }
+async function finalizeRecording(chunks){
+  busy(true,'جارٍ تجهيز التسجيل…');
+  try{
+    const blob=new Blob(chunks,{type:(chunks[0]&&chunks[0].type)||'audio/webm'});
+    const ab=await blob.arrayBuffer();
+    const buf=await ensureCtx().decodeAudioData(ab);
+    setSource(buf,'تسجيل ميكروفون — '+new Date().toLocaleTimeString('ar'));
+  }catch(e){ console.error(e); toast('تعذّرت قراءة التسجيل — حاول مجددًا','err'); }
+  busy(false);
+}
+
+/* ---------- 8) التنزيل (معالجة دون اتصال + ترميز WAV) ---------- */
+function encodeWAV(buffer){
+  const nCh=Math.min(2,buffer.numberOfChannels), sr=buffer.sampleRate, len=buffer.length;
+  const dataSize=len*nCh*2;
+  const ab=new ArrayBuffer(44+dataSize), v=new DataView(ab);
+  const wstr=(o,s)=>{ for(let i=0;i<s.length;i++) v.setUint8(o+i,s.charCodeAt(i)); };
+  wstr(0,'RIFF'); v.setUint32(4,36+dataSize,true); wstr(8,'WAVE');
+  wstr(12,'fmt '); v.setUint32(16,16,true); v.setUint16(20,1,true); v.setUint16(22,nCh,true);
+  v.setUint32(24,sr,true); v.setUint32(28,sr*nCh*2,true); v.setUint16(32,nCh*2,true); v.setUint16(34,16,true);
+  wstr(36,'data'); v.setUint32(40,dataSize,true);
+  const chans=[]; for(let c=0;c<nCh;c++) chans.push(buffer.getChannelData(c));
+  let off=44;
+  for(let i=0;i<len;i++) for(let c=0;c<nCh;c++){
+    let s=chans[c][i]; s=s<-1?-1:s>1?1:s;
+    v.setInt16(off, s<0?s*0x8000:s*0x7FFF, true); off+=2;
+  }
+  return new Blob([ab],{type:'audio/wav'});
+}
+function triggerDownload(blob,name){
+  const u=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=u; a.download=name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(u),4000);
+}
+async function downloadProcessed(){
+  if(!state.buffer){ toast('لا يوجد صوت لتنزيله بعد — سجّل أو ارفع ملفًا','warn'); return; }
+  el.btnDownload.disabled=true;
+  busy(true,'جارٍ معالجة الصوت داخل المتصفح…');
+  await new Promise(r=>setTimeout(r,40));      // فرصة لإظهار النافذة
+  try{
+    const rate=currentRate(), tail=currentTail();
+    const length=Math.max(1, Math.ceil((state.buffer.duration/rate + tail) * state.buffer.sampleRate));
+    const off=new OfflineAudioContext(2, length, state.buffer.sampleRate);
+    await ensureWorklet(off);                  // لنوع "التشويش الإلكتروني"
+    const src=off.createBufferSource();
+    src.buffer=state.buffer; src.playbackRate.value=rate;
+    const chain=(state.mode==='processed' && state.effectId)
+      ? EFFECTS[state.effectId].build(off, state.intensity, state.pitchSemitones)
+      : dryChain(off);
+    src.connect(chain.input); chain.output.connect(off.destination);
+    src.start(0);
+    const rendered=await off.startRendering();
+    const name='بدل-صوتك-'+(state.mode==='processed'&&state.effectId?EFFECTS[state.effectId].file:'original')+'.wav';
+    triggerDownload(encodeWAV(rendered), name);
+    toast('تمت المعالجة وبدأ التنزيل','ok');
+  }catch(e){
+    console.error(e);
+    toast('تعذّرت معالجة الملف: '+(e.message||'خطأ غير معروف'),'err');
+  }
+  busy(false); el.btnDownload.disabled=false;
+}
+function busy(on,txt){ el.busyOv.hidden=!on; if(txt) el.busyTxt.textContent=txt; }
+
+/* ---------- 9) الواجهة: مزامنة، مؤثرات، رسم ---------- */
+function setVuState(t){ el.vuState.textContent=t; }
+function syncTransport(){
+  const p=state.playing;
+  el.icoPlay.hidden=p; el.icoStop.hidden=!p;
+  el.btnPlay.classList.toggle('on',p);
+  el.btnPlay.setAttribute('aria-label', p?'إيقاف':'تشغيل');
+  const orig=p && state.mode==='original';
+  el.srcPlayUse.setAttribute('href', orig?'#i-stop':'#i-play');
+  el.srcPlayLbl.textContent=orig?'إيقاف':'سماع الأصل';
+  setVuState(state.rec.active?'جارٍ التسجيل':p?(orig?'تشغيل — الأصل':'تشغيل — معالَج'):'خمول');
+}
+function syncModeUI(){
+  $$('.ab-btn').forEach(b=>b.classList.toggle('on', b.dataset.mode===state.mode));
+  const eff=state.effectId && EFFECTS[state.effectId];
+  el.fxNowName.textContent = eff ? eff.name : 'الأصل — بلا تأثير';
+}
+function selectEffect(id){
+  if(!state.buffer){ toast('أضف صوتًا أولًا: سجّل أو ارفع ملفًا','warn'); return; }
+  state.effectId=id; state.mode='processed';
+  $$('.fx-btn').forEach(b=>b.classList.toggle('on', b.dataset.fx===id));
+  el.pitchRow.hidden = (id!=='pitch');
+  syncModeUI();
+  if(state.playing) startPlayback(state.lastPos);
+}
+function clearEffect(){
+  state.effectId=null; state.mode='original';
+  $$('.fx-btn').forEach(b=>b.classList.remove('on'));
+  el.pitchRow.hidden=true;
+  syncModeUI();
+  if(state.playing) startPlayback(state.lastPos);
+}
+const rebuildDebounced=debounce(()=>{
+  if(state.playing && state.mode==='processed' && state.effectId) startPlayback(state.lastPos);
+},240);
+
+/* --- لوحات الرسم --- */
+const DPR=()=>window.devicePixelRatio||1;
+function fitCanvases(){
+  [el.wf, el.spec].forEach(c=>{
+    const r=c.getBoundingClientRect();
+    c.width=Math.max(10,Math.round(r.width*DPR()));
+    c.height=Math.max(10,Math.round(r.height*DPR()));
+  });
+}
+function buildBarRanges(){
+  if(!actx) return;
+  const bins=masterAnalyser.frequencyBinCount, B=72, min=45, max=15000;
+  barRanges=[];
+  for(let i=0;i<B;i++){
+    const f0=min*Math.pow(max/min,i/B), f1=min*Math.pow(max/min,(i+1)/B);
+    const b0=Math.floor(f0/(actx.sampleRate/2)*bins);
+    const b1=Math.min(bins, Math.max(b0+1, Math.ceil(f1/(actx.sampleRate/2)*bins)));
+    barRanges.push([b0,b1]);
+  }
+}
+function drawWave(frac){
+  const c=el.wf, g=c.getContext('2d'), W=c.width, H=c.height, D=DPR();
+  g.clearRect(0,0,W,H);
+  if(!state.peaks) return;
+  const N=state.peaks.length, bw=W/N, cut=Math.floor(frac*N);
+  for(let i=0;i<N;i++){
+    const x=W-(i+1)*bw;                       // RTL: البداية من اليمين
+    const v=Math.max(0.02,state.peaks[i]);
+    const h=v*(H-8*D), y=(H-h)/2;
+    g.fillStyle = i<cut ? 'rgba(255,178,36,.9)' : 'rgba(244,238,227,.14)';
+    g.fillRect(x+bw*0.12, y, Math.max(1,bw*0.76), h);
+  }
+  if(frac>0.001 && frac<0.999){
+    g.fillStyle='#f4eee3';
+    g.fillRect(W-frac*W-D, 0, 2*D, H);
+  }
+}
+function drawSpectrum(t){
+  const c=el.spec, g=c.getContext('2d'), W=c.width, H=c.height, D=DPR();
+  g.clearRect(0,0,W,H);
+  if(state.playing && masterAnalyser && barRanges){
+    const n=masterAnalyser.frequencyBinCount;
+    if(!fdBuf||fdBuf.length!==n) fdBuf=new Uint8Array(n);
+    masterAnalyser.getByteFrequencyData(fdBuf);
+    const B=barRanges.length, bw=W/B;
+    for(let i=0;i<B;i++){
+      const [b0,b1]=barRanges[i];
+      let m=0; for(let b=b0;b<b1&&b<n;b++) if(fdBuf[b]>m) m=fdBuf[b];
+      const v=m/255, h=Math.max(2*D, v*(H-10*D));
+      g.fillStyle = v>0.85 ? 'rgba(255,75,62,.9)' : `rgba(255,178,36,${0.22+0.7*v})`;
+      g.fillRect(W-(i+1)*bw+bw*0.15, H-3*D-h, bw*0.7, h);   // الترددات المنخفضة يمينًا
+    }
+  } else {
+    g.strokeStyle='rgba(255,178,36,.3)'; g.lineWidth=1.5*D;
+    g.beginPath();
+    const B=barRanges?barRanges.length:64, bw=W/B;
+    for(let i=0;i<B;i++){
+      const x=W-(i+1)*bw+bw/2;
+      const y=H/2 + Math.sin(i*0.45+t*2.1)*3*D + Math.sin(i*0.12+t*0.7)*2*D;
+      i?g.lineTo(x,y):g.moveTo(x,y);
+    }
+    g.stroke();
+  }
+}
+
+/* --- مقياس VU (يُبنى برمجيًا داخل SVG) --- */
+let vuNeedleEl=null, vuCur=-50, vuTargetDb=-24, nextWander=0;
+function buildVU(){
+  const svg=el.vuSvg, NS='http://www.w3.org/2000/svg', cx=120, cy=128;
+  const P=(r,a)=>{ const rad=a*Math.PI/180; return [cx+r*Math.sin(rad), cy-r*Math.cos(rad)]; };
+  const mk=(tag,attrs)=>{ const e=document.createElementNS(NS,tag);
+    for(const k in attrs) e.setAttribute(k,attrs[k]); svg.appendChild(e); return e; };
+  const arc=(r,a0,a1,color,w)=>{
+    const [x0,y0]=P(r,a0),[x1,y1]=P(r,a1);
+    mk('path',{d:`M ${x0.toFixed(1)} ${y0.toFixed(1)} A ${r} ${r} 0 0 1 ${x1.toFixed(1)} ${y1.toFixed(1)}`,
+      stroke:color,'stroke-width':w,fill:'none','stroke-linecap':'round'});
+  };
+  arc(96,-50,25,'#3f9e6e',8); arc(96,25,37,'#d99a1e',8); arc(96,37,50,'#c73a30',8);
+  [[-20,-50],[-10,-6.5],[-5,15.2],[0,37],[3,50]].forEach(([lbl,a])=>{
+    const [x0,y0]=P(86,a),[x1,y1]=P(78,a);
+    mk('line',{x1:x0,y1:y0,x2:x1,y2:y1,stroke:'#6b6155','stroke-width':1.6});
+    const [tx,ty]=P(66,a);
+    const t=mk('text',{x:tx,y:ty+3,'text-anchor':'middle',fill:'#9a8f7f',
+      'font-size':10,'font-family':'IBM Plex Mono,monospace'});
+    t.textContent=lbl>0?'+'+lbl:lbl;
+  });
+  mk('line',{id:'vuNeedle',x1:cx,y1:cy,x2:cx,y2:cy-84,stroke:'#f4eee3','stroke-width':2.4,'stroke-linecap':'round'});
+  mk('circle',{cx,cy,r:6.5,fill:'#241d16',stroke:'#4a3f33','stroke-width':2});
+  const t=mk('text',{x:cx,y:cy-42,'text-anchor':'middle',fill:'#ffb224','font-size':26,'font-family':'Lalezar'});
+  t.textContent='VU';
+  vuNeedleEl=$('#vuNeedle');
+}
+const dbToAngle=db=>-50+((clamp(db,-20,3)+20)/23)*100;
+function rmsDb(an){
+  const n=an.fftSize;
+  if(!tdBuf||tdBuf.length!==n) tdBuf=new Uint8Array(n);
+  an.getByteTimeDomainData(tdBuf);
+  let s=0; for(let i=0;i<n;i++){ const v=(tdBuf[i]-128)/128; s+=v*v; }
+  return 20*Math.log10(Math.sqrt(s/n)+1e-6)+8;
+}
+function updateVU(now){
+  let db=null;
+  if(state.rec.active && state.rec.analyser) db=rmsDb(state.rec.analyser);
+  else if(state.playing && masterAnalyser)   db=rmsDb(masterAnalyser);
+  if(db===null){                             // خمول: تمايل لطيف حيّ
+    if(now>nextWander){
+      vuTargetDb=-26+Math.random()*11+(Math.random()<0.15?7:0);
+      nextWander=now+320+Math.random()*750;
+    }
+    db=vuTargetDb;
+  }
+  vuCur+=(dbToAngle(db)-vuCur)*0.14;
+  if(vuNeedleEl) vuNeedleEl.setAttribute('transform',`rotate(${vuCur.toFixed(2)} 120 128)`);
+}
+function micRms(){
+  const an=state.rec.analyser; if(!an) return 0;
+  const n=an.fftSize;
+  if(!tdBufS||tdBufS.length!==n) tdBufS=new Uint8Array(n);
+  an.getByteTimeDomainData(tdBufS);
+  let s=0; for(let i=0;i<n;i++){ const v=(tdBufS[i]-128)/128; s+=v*v; }
+  return Math.sqrt(s/n);
+}
+
+/* --- حلقة الرسم الرئيسية --- */
+function frame(now){
+  requestAnimationFrame(frame);
+  const t=now/1000;
+  if(state.buffer){
+    let pos;
+    if(state.playing){
+      pos=state.startOffset + state.rate*(actx.currentTime-state.startCtxTime);
+      pos=clamp(pos,0,state.buffer.duration);
+    } else pos=state.pendingOffset;
+    state.lastPos=pos;
+    drawWave(pos/state.buffer.duration);
+    el.timeNow.textContent=fmt(pos);
+  }
+  drawSpectrum(t);
+  updateVU(now);
+  if(state.rec.active){
+    el.recTime.textContent=fmtRec((performance.now()-state.rec.start)/1000);
+    el.recLevel.style.width=clamp(micRms()*320,2,100)+'%';
+  }
+}
+
+/* --- سحب شريط الموجة (Seek) --- */
+let seeking=false;
+function doSeek(e){
+  if(!state.buffer) return;
+  const r=el.wf.getBoundingClientRect();
+  const f=clamp(1-(e.clientX-r.left)/r.width, 0, 1);   // RTL: البداية يمين
+  const pos=f*state.buffer.duration;
+  if(state.playing) startPlayback(pos);
+  else { state.pendingOffset=pos; state.lastPos=pos; }
+}
+
+/* ---------- الربط والتهيئة ---------- */
+function init(){
+  buildVU();
+  fitCanvases();
+  window.addEventListener('resize', debounce(fitCanvases,150));
+  requestAnimationFrame(frame);
+
+  el.btnRecord.addEventListener('click', startRecording);
+  $('#btnRecStop').addEventListener('click', stopRecording);
+  $('#btnRecCancel').addEventListener('click', cancelRecording);
+
+  el.btnUpload.addEventListener('click', ()=>el.fileInput.click());
+  el.fileInput.addEventListener('change', e=>{
+    const f=e.target.files[0]; if(f) loadFile(f);
+    e.target.value='';
+  });
+
+  el.srcPlay.addEventListener('click', ()=>{
+    if(!state.buffer) return;
+    if(state.playing && state.mode==='original') stopPlayback();
+    else { state.mode='original'; syncModeUI(); startPlayback(state.lastPos||0); }
+  });
+  el.srcDelete.addEventListener('click', clearSource);
+
+  $$('.fx-btn').forEach(b=>b.addEventListener('click', ()=>selectEffect(b.dataset.fx)));
+  el.fxClear.addEventListener('click', clearEffect);
+  el.fxIntensity.addEventListener('input', e=>{
+    state.intensity=e.target.value/100;
+    el.fxIntensityVal.textContent=e.target.value+'%';
+    rebuildDebounced();
+  });
+  el.fxPitch.addEventListener('input', e=>{
+    state.pitchSemitones=+e.target.value;
+    el.fxPitchVal.textContent=(e.target.value>0?'+':'')+e.target.value;
+    rebuildDebounced();
+  });
+
+  $$('.ab-btn').forEach(b=>b.addEventListener('click', ()=>setMode(b.dataset.mode)));
+  el.btnPlay.addEventListener('click', ()=>{
+    if(!state.buffer){ toast('سجّل صوتك أو ارفع ملفًا أولًا','warn'); return; }
+    state.playing ? stopPlayback() : startPlayback(state.pendingOffset);
+  });
+  el.btnDownload.addEventListener('click', downloadProcessed);
+
+  el.wf.addEventListener('pointerdown', e=>{
+    if(!state.buffer) return;
+    seeking=true; el.wf.setPointerCapture(e.pointerId); doSeek(e);
+  });
+  el.wf.addEventListener('pointermove', e=>{ if(seeking) doSeek(e); });
+  el.wf.addEventListener('pointerup', ()=>seeking=false);
+}
+init();
+</script>
+</body>
+</html>

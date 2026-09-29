@@ -11,23 +11,14 @@
 
 <style>
 /* ======================================================================
-   style.css — نظام التصميم والتنسيقات
-   (لفصل المشروع: انقل هذا القسم كاملًا إلى ملف style.css وأشر إليه)
+   التنسيقات (يمكن فصلها لاحقًا إلى style.css دون أي تعديل)
    ====================================================================== */
 :root{
-  --bg:#0e0c09;
-  --panel:#161210;
-  --panel2:#1c1712;
-  --line:#2c241b;
-  --line-soft:#241d16;
-  --ink:#f4eee3;
-  --muted:#9a8f7f;
-  --amber:#ffb224;
-  --amber-ink:#1c1204;
-  --amber-dim:#8a5f10;
-  --red:#ff4b3e;
-  --green:#57d99a;
-  --radius:16px;
+  --bg:#0e0c09; --panel:#161210; --panel2:#1c1712;
+  --line:#2c241b; --line-soft:#241d16;
+  --ink:#f4eee3; --muted:#9a8f7f;
+  --amber:#ffb224; --amber-ink:#1c1204; --amber-dim:#8a5f10;
+  --red:#ff4b3e; --green:#57d99a; --radius:16px;
   --font-body:"IBM Plex Sans Arabic",sans-serif;
   --font-display:"Lalezar",cursive;
   --font-mono:"IBM Plex Mono",monospace;
@@ -35,93 +26,39 @@
 *{margin:0;padding:0;box-sizing:border-box}
 [hidden]{display:none!important}
 html{scroll-behavior:smooth}
-body{
-  background:var(--bg);
-  color:var(--ink);
-  font-family:var(--font-body);
-  font-size:15.5px;
-  line-height:1.75;
-  -webkit-font-smoothing:antialiased;
-}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15.5px;line-height:1.75;-webkit-font-smoothing:antialiased}
 .wrap{max-width:1060px;margin-inline:auto;padding-inline:1.2rem}
 .mono{font-family:var(--font-mono)}
 .muted{color:var(--muted)}
 b,strong{font-weight:700}
 
-/* ---------- أيقونات ---------- */
 .ic{width:19px;height:19px;flex:none;display:inline-block;vertical-align:middle}
 .ic.lg{width:28px;height:28px}
 .ic.xs{width:14px;height:14px}
 
-/* ---------- الشريط العلوي ---------- */
-.topbar{
-  position:sticky;top:0;z-index:50;
-  background:rgba(14,12,9,.88);backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--line-soft);
-}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(14,12,9,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line-soft)}
 .bar-in{display:flex;align-items:center;gap:1.1rem;padding-block:.7rem}
-.brand{
-  display:flex;align-items:center;gap:.5rem;
-  font-family:var(--font-display);font-size:1.35rem;color:var(--ink);
-  text-decoration:none;letter-spacing:.01em;
-}
+.brand{display:flex;align-items:center;gap:.5rem;font-family:var(--font-display);font-size:1.35rem;color:var(--ink);text-decoration:none;letter-spacing:.01em}
 .brand .ic{color:var(--amber);width:22px;height:22px}
-.privacy-chip{
-  display:flex;align-items:center;gap:.45rem;
-  margin-inline-start:auto;
-  font-size:.76rem;color:var(--muted);
-  border:1px solid var(--line);border-radius:99px;padding:.25rem .8rem;
-  white-space:nowrap;
-}
-.privacy-chip .pulse{
-  width:8px;height:8px;border-radius:50%;background:var(--green);flex:none;
-  animation:pulse 2.2s infinite;
-}
+.privacy-chip{display:flex;align-items:center;gap:.45rem;margin-inline-start:auto;font-size:.76rem;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:.25rem .8rem;white-space:nowrap}
+.privacy-chip .pulse{width:8px;height:8px;border-radius:50%;background:var(--green);flex:none;animation:pulse 2.2s infinite}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(87,217,154,.45)}55%{box-shadow:0 0 0 6px rgba(87,217,154,0)}}
 .nav-link{color:var(--muted);text-decoration:none;font-size:.86rem;transition:color .2s}
 .nav-link:hover{color:var(--amber)}
 
-/* ---------- البطل ---------- */
-.hero{
-  padding-block:4.2rem 3.4rem;
-  background-image:radial-gradient(#1c1712 1px,transparent 1.4px);
-  background-size:24px 24px;
-  border-bottom:1px solid var(--line-soft);
-}
+.hero{padding-block:4.2rem 3.4rem;background-image:radial-gradient(#1c1712 1px,transparent 1.4px);background-size:24px 24px;border-bottom:1px solid var(--line-soft)}
 .hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:3.2rem;align-items:center}
-.kicker{
-  display:inline-flex;align-items:center;gap:.5rem;
-  color:var(--amber);font-size:.82rem;font-weight:600;letter-spacing:.04em;
-  border:1px solid var(--line);border-radius:99px;padding:.35rem .95rem;margin-bottom:1.4rem;
-}
-h1{
-  font-family:var(--font-display);font-weight:400;
-  font-size:clamp(3.1rem,7.5vw,5.4rem);
-  line-height:1.08;letter-spacing:.005em;
-}
+.kicker{display:inline-flex;align-items:center;gap:.5rem;color:var(--amber);font-size:.82rem;font-weight:600;letter-spacing:.04em;border:1px solid var(--line);border-radius:99px;padding:.35rem .95rem;margin-bottom:1.4rem}
+h1{font-family:var(--font-display);font-weight:400;font-size:clamp(3.1rem,7.5vw,5.4rem);line-height:1.08;letter-spacing:.005em}
 h1 em{font-style:normal;color:var(--amber)}
 .h1-wave{display:block;width:min(300px,70%);margin-top:.4rem;color:var(--amber-dim)}
 .hero p.lead{color:var(--muted);max-width:46ch;margin-top:1.1rem;font-size:1.02rem}
 .hero-actions{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:1.9rem}
-.privacy-line{
-  display:flex;align-items:center;gap:.5rem;
-  margin-top:1.4rem;font-size:.8rem;color:var(--muted);
-}
+.privacy-line{display:flex;align-items:center;gap:.5rem;margin-top:1.4rem;font-size:.8rem;color:var(--muted)}
 .privacy-line .ic{color:var(--green)}
 
-/* ---------- الأزرار ---------- */
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:.55rem;
-  font-family:var(--font-body);font-weight:700;font-size:1rem;
-  border-radius:14px;border:none;cursor:pointer;
-  padding:.85rem 1.5rem;color:var(--ink);
-  transition:transform .12s,box-shadow .12s,background .2s,border-color .2s;
-  text-decoration:none;
-}
-.btn.primary{
-  background:var(--amber);color:var(--amber-ink);
-  box-shadow:0 4px 0 var(--amber-dim);
-}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;font-family:var(--font-body);font-weight:700;font-size:1rem;border-radius:14px;border:none;cursor:pointer;padding:.85rem 1.5rem;color:var(--ink);transition:transform .12s,box-shadow .12s,background .2s,border-color .2s;text-decoration:none}
+.btn.primary{background:var(--amber);color:var(--amber-ink);box-shadow:0 4px 0 var(--amber-dim)}
 .btn.primary:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--amber-dim)}
 .btn.primary:active{transform:translateY(2px);box-shadow:0 1px 0 var(--amber-dim)}
 .btn.ghost{background:var(--panel2);border:1px solid var(--line)}
@@ -130,87 +67,37 @@ h1 em{font-style:normal;color:var(--amber)}
 .btn.sm{padding:.5rem .95rem;font-size:.85rem;border-radius:11px}
 .btn:disabled{opacity:.5;pointer-events:none}
 
-/* ---------- بطاقة مقياس VU ---------- */
-.meter-card{
-  background:var(--panel);border:1px solid var(--line);
-  border-radius:var(--radius);padding:1.1rem 1.2rem .7rem;
-}
-.meter-top{
-  display:flex;justify-content:space-between;align-items:center;
-  font-size:.78rem;color:var(--muted);letter-spacing:.06em;
-  border-bottom:1px dashed var(--line);padding-bottom:.55rem;margin-bottom:.3rem;
-}
+.meter-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:1.1rem 1.2rem .7rem}
+.meter-top{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:var(--muted);letter-spacing:.06em;border-bottom:1px dashed var(--line);padding-bottom:.55rem;margin-bottom:.3rem}
 #vuState{font-family:var(--font-mono);color:var(--amber)}
 .meter-card svg{width:100%;height:auto;display:block}
 
-/* ---------- الأقسام ---------- */
 .sec{padding-block:2.6rem}
 .sec-head{display:flex;align-items:center;gap:1rem;margin-bottom:1.15rem;flex-wrap:wrap}
-h2{
-  font-family:var(--font-display);font-weight:400;font-size:1.7rem;
-  display:flex;align-items:baseline;gap:.7rem;
-}
-h2 i{
-  font-style:normal;font-family:var(--font-mono);font-size:.85rem;
-  color:var(--amber);border:1px solid var(--line);border-radius:8px;
-  padding:.1rem .5rem;transform:translateY(-4px);
-}
-.chip{
-  font-size:.75rem;color:var(--muted);border:1px solid var(--line);
-  border-radius:99px;padding:.2rem .8rem;
-}
+h2{font-family:var(--font-display);font-weight:400;font-size:1.7rem;display:flex;align-items:baseline;gap:.7rem}
+h2 i{font-style:normal;font-family:var(--font-mono);font-size:.85rem;color:var(--amber);border:1px solid var(--line);border-radius:8px;padding:.1rem .5rem;transform:translateY(-4px)}
+.chip{font-size:.75rem;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:.2rem .8rem}
 .chip.ok{color:var(--green);border-color:rgba(87,217,154,.35)}
-.panel{
-  background:var(--panel);border:1px solid var(--line);
-  border-radius:var(--radius);padding:1.3rem;
-  transition:opacity .35s;
-}
-#effects .panel.locked,#studio .panel.locked{
-  opacity:.4;pointer-events:none;user-select:none;
-}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:1.3rem;transition:opacity .35s}
+#effects .panel.locked,#studio .panel.locked{opacity:.4;pointer-events:none;user-select:none}
 
-/* ---------- المصدر ---------- */
-.src-empty{
-  display:flex;flex-direction:column;align-items:center;gap:.7rem;
-  text-align:center;padding:1.8rem 1rem;color:var(--muted);
-}
+.src-empty{display:flex;flex-direction:column;align-items:center;gap:.7rem;text-align:center;padding:1.8rem 1rem;color:var(--muted)}
 .src-empty .ic{width:44px;height:44px;color:#4a3f33}
 .src-file{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 .src-info strong{display:block;font-size:1.02rem;overflow-wrap:anywhere}
 .src-info .mono{font-size:.8rem}
 .src-actions{display:flex;gap:.6rem;flex-wrap:wrap}
 
-/* ---------- المؤثرات ---------- */
-.fx-bar{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:1rem;flex-wrap:wrap;
-  border-bottom:1px solid var(--line-soft);padding-bottom:.9rem;margin-bottom:1.15rem;
-}
+.fx-bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;border-bottom:1px solid var(--line-soft);padding-bottom:.9rem;margin-bottom:1.15rem}
 .fx-now{font-size:.9rem;color:var(--muted)}
 .fx-now b{color:var(--amber)}
-.fx-group{
-  display:grid;grid-template-columns:150px 1fr;gap:1.1rem;
-  padding-block:1.05rem;align-items:start;
-}
+.fx-group{display:grid;grid-template-columns:150px 1fr;gap:1.1rem;padding-block:1.05rem;align-items:start}
 .fx-group + .fx-group{border-top:1px dashed var(--line-soft)}
-.g-label{
-  font-size:.75rem;font-weight:600;color:var(--muted);
-  letter-spacing:.1em;padding-top:.55rem;
-  border-inline-start:2px solid var(--amber-dim);padding-inline-start:.7rem;
-}
+.g-label{font-size:.75rem;font-weight:600;color:var(--muted);letter-spacing:.1em;padding-top:.55rem;border-inline-start:2px solid var(--amber-dim);padding-inline-start:.7rem}
 .g-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.6rem}
-.fx-btn{
-  display:flex;align-items:center;gap:.65rem;
-  background:var(--panel2);border:1px solid var(--line);border-radius:12px;
-  padding:.62rem .8rem;cursor:pointer;text-align:start;
-  color:var(--ink);font-family:var(--font-body);
-  transition:border-color .18s,background .18s;
-}
+.fx-btn{display:flex;align-items:center;gap:.65rem;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:.62rem .8rem;cursor:pointer;text-align:start;color:var(--ink);font-family:var(--font-body);transition:border-color .18s,background .18s}
 .fx-btn:hover{border-color:var(--amber-dim)}
-.fx-btn .led{
-  width:8px;height:8px;border-radius:50%;background:#3a3128;flex:none;
-  transition:background .18s,box-shadow .18s;
-}
+.fx-btn .led{width:8px;height:8px;border-radius:50%;background:#3a3128;flex:none;transition:background .18s,box-shadow .18s}
 .fx-btn .ic{color:var(--muted);transition:color .18s}
 .fx-btn .fx-t{display:flex;flex-direction:column;line-height:1.35;min-width:0}
 .fx-btn .fx-t b{font-size:.9rem;font-weight:600}
@@ -220,139 +107,67 @@ h2 i{
 .fx-btn.on .ic{color:var(--amber)}
 .fx-btn.on .fx-t b{color:var(--amber)}
 
-.fx-controls{
-  display:flex;gap:2.2rem;flex-wrap:wrap;
-  border-top:1px solid var(--line-soft);padding-top:1.15rem;margin-top:.4rem;
-}
+.fx-controls{display:flex;gap:2.2rem;flex-wrap:wrap;border-top:1px solid var(--line-soft);padding-top:1.15rem;margin-top:.4rem}
 .ctrl{flex:1;min-width:230px}
-.ctrl label{
-  display:flex;justify-content:space-between;align-items:baseline;
-  font-size:.82rem;color:var(--muted);margin-bottom:.45rem;
-}
+.ctrl label{display:flex;justify-content:space-between;align-items:baseline;font-size:.82rem;color:var(--muted);margin-bottom:.45rem}
 .ctrl label b{color:var(--amber);font-size:.9rem}
-input[type=range]{
-  width:100%;appearance:none;-webkit-appearance:none;height:6px;border-radius:99px;
-  background:#2c241b;outline:none;cursor:pointer;
-}
-input[type=range]::-webkit-slider-thumb{
-  -webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;
-  background:var(--amber);border:3px solid var(--bg);box-shadow:0 0 0 1px var(--amber-dim);
-}
-input[type=range]::-moz-range-thumb{
-  width:16px;height:16px;border-radius:50%;background:var(--amber);
-  border:3px solid var(--bg);box-shadow:0 0 0 1px var(--amber-dim);
-}
+input[type=range]{width:100%;appearance:none;-webkit-appearance:none;height:6px;border-radius:99px;background:#2c241b;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(--amber);border:3px solid var(--bg);box-shadow:0 0 0 1px var(--amber-dim)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--amber);border:3px solid var(--bg);box-shadow:0 0 0 1px var(--amber-dim)}
 
-/* ---------- الاستوديو ---------- */
-.studio-top{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:1rem;flex-wrap:wrap;margin-bottom:1.1rem;
-}
+.studio-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.1rem}
 .ab{display:inline-flex;border:1px solid var(--line);border-radius:11px;overflow:hidden}
-.ab-btn{
-  background:transparent;border:none;color:var(--muted);
-  font-family:var(--font-body);font-weight:600;font-size:.85rem;
-  padding:.5rem 1.15rem;cursor:pointer;transition:background .18s,color .18s;
-}
+.ab-btn{background:transparent;border:none;color:var(--muted);font-family:var(--font-body);font-weight:600;font-size:.85rem;padding:.5rem 1.15rem;cursor:pointer;transition:background .18s,color .18s}
 .ab-btn + .ab-btn{border-inline-start:1px solid var(--line)}
 .ab-btn.on{background:var(--amber);color:var(--amber-ink)}
 .transport{display:flex;align-items:center;gap:1.1rem}
-.play-big{
-  width:66px;height:66px;border-radius:50%;flex:none;
-  background:transparent;border:2px solid var(--amber);color:var(--amber);
-  display:flex;align-items:center;justify-content:center;cursor:pointer;
-  transition:background .18s,color .18s,transform .12s;
-}
+.play-big{width:66px;height:66px;border-radius:50%;flex:none;background:transparent;border:2px solid var(--amber);color:var(--amber);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .18s,color .18s,transform .12s}
 .play-big:hover{transform:scale(1.05)}
 .play-big.on{background:var(--amber);color:var(--amber-ink)}
 .tp-mid{flex:1;min-width:0}
 .wf{width:100%;height:56px;display:block;cursor:pointer;touch-action:none}
 .times{display:flex;gap:.5rem;font-size:.8rem;margin-top:.35rem}
 .spec{width:100%;height:120px;display:block;margin-top:1.1rem;background:var(--panel2);border-radius:12px;border:1px solid var(--line-soft)}
-.hint{
-  display:flex;align-items:center;gap:.45rem;
-  margin-top:.9rem;font-size:.78rem;color:var(--muted);
-}
+.hint{display:flex;align-items:center;gap:.45rem;margin-top:.9rem;font-size:.78rem;color:var(--muted)}
 .hint .ic{color:var(--green)}
 
-/* ---------- كيف يعمل ---------- */
 .steps{border-bottom:1px solid var(--line-soft)}
-.step{
-  display:grid;grid-template-columns:100px 1fr;gap:1.4rem;align-items:start;
-  border-top:1px solid var(--line-soft);padding-block:1.5rem;
-}
-.step .num{
-  font-family:var(--font-display);font-size:3.2rem;line-height:1;color:var(--amber);
-}
+.step{display:grid;grid-template-columns:100px 1fr;gap:1.4rem;align-items:start;border-top:1px solid var(--line-soft);padding-block:1.5rem}
+.step .num{font-family:var(--font-display);font-size:3.2rem;line-height:1;color:var(--amber)}
 .step h3{font-size:1.08rem;margin-bottom:.25rem}
 .step p{color:var(--muted);font-size:.92rem;max-width:62ch}
 .step.privacy-note .num{color:var(--green)}
 .step.privacy-note h3{display:flex;align-items:center;gap:.5rem}
 .step.privacy-note .ic{color:var(--green)}
 
-/* ---------- التذييل ---------- */
 .footer{border-top:1px solid var(--line-soft);margin-top:1.5rem;padding-block:2rem}
 .foot-in{display:flex;align-items:flex-start;justify-content:space-between;gap:1.5rem;flex-wrap:wrap}
 .foot-lines p{font-size:.88rem;color:var(--muted)}
 .foot-lines .strong{color:var(--ink);font-weight:600;margin-top:.2rem}
 
-/* ---------- التسجيل (نافذة عائمة) ---------- */
-.overlay{
-  position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;
-  background:rgba(10,8,6,.72);backdrop-filter:blur(4px);padding:1.2rem;
-}
-.rec-card{
-  background:var(--panel);border:1px solid var(--line);border-radius:20px;
-  padding:2rem 2.4rem;text-align:center;min-width:min(340px,90vw);
-}
-.rec-dot{
-  width:14px;height:14px;border-radius:50%;background:var(--red);
-  margin:0 auto .8rem;animation:blink 1s infinite;
-}
+.overlay{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;background:rgba(10,8,6,.72);backdrop-filter:blur(4px);padding:1.2rem}
+.rec-card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:2rem 2.4rem;text-align:center;min-width:min(340px,90vw)}
+.rec-dot{width:14px;height:14px;border-radius:50%;background:var(--red);margin:0 auto .8rem;animation:blink 1s infinite}
 @keyframes blink{50%{opacity:.25}}
 .rec-title{font-size:.85rem;color:var(--muted);letter-spacing:.08em}
 .rec-time{font-family:var(--font-mono);font-size:2.6rem;font-weight:600;margin-block:.4rem .9rem}
-.rec-level{
-  height:8px;border-radius:99px;background:#2c241b;overflow:hidden;margin-bottom:1.6rem;
-}
-.rec-level i{
-  display:block;height:100%;width:2%;border-radius:99px;
-  background:var(--red);transition:width .1s linear;
-}
+.rec-level{height:8px;border-radius:99px;background:#2c241b;overflow:hidden;margin-bottom:1.6rem}
+.rec-level i{display:block;height:100%;width:2%;border-radius:99px;background:var(--red);transition:width .1s linear}
 .rec-actions{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
 .btn.rec-stop{background:var(--red);color:#fff;box-shadow:0 4px 0 #9c2a22}
 .btn.rec-stop:active{transform:translateY(2px);box-shadow:0 1px 0 #9c2a22}
 
-/* ---------- نافذة المعالجة ---------- */
-.busy-card{
-  display:flex;align-items:center;gap:1rem;
-  background:var(--panel);border:1px solid var(--line);border-radius:16px;
-  padding:1.1rem 1.6rem;
-}
-.spinner{
-  width:26px;height:26px;border-radius:50%;flex:none;
-  border:3px solid var(--line);border-top-color:var(--amber);
-  animation:spin .8s linear infinite;
-}
+.busy-card{display:flex;align-items:center;gap:1rem;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:1.1rem 1.6rem}
+.spinner{width:26px;height:26px;border-radius:50%;flex:none;border:3px solid var(--line);border-top-color:var(--amber);animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ---------- التنبيهات ---------- */
-#toasts{
-  position:fixed;bottom:1.2rem;inset-inline-start:1.2rem;z-index:120;
-  display:flex;flex-direction:column;gap:.6rem;max-width:min(360px,88vw);
-}
-.toast{
-  background:var(--panel2);border:1px solid var(--line);
-  border-inline-start:3px solid var(--amber);
-  border-radius:12px;padding:.75rem 1.05rem;font-size:.87rem;
-  opacity:0;transform:translateY(8px);transition:all .3s;
-}
+#toasts{position:fixed;bottom:1.2rem;inset-inline-start:1.2rem;z-index:120;display:flex;flex-direction:column;gap:.6rem;max-width:min(360px,88vw)}
+.toast{background:var(--panel2);border:1px solid var(--line);border-inline-start:3px solid var(--amber);border-radius:12px;padding:.75rem 1.05rem;font-size:.87rem;opacity:0;transform:translateY(8px);transition:all .3s}
 .toast.show{opacity:1;transform:none}
 .toast.ok{border-inline-start-color:var(--green)}
 .toast.err{border-inline-start-color:var(--red)}
 .toast.warn{border-inline-start-color:var(--amber)}
 
-/* ---------- تجاوب ---------- */
 @media (max-width:900px){
   .hero{padding-block:2.8rem 2.4rem}
   .hero-grid{grid-template-columns:1fr;gap:2rem}
@@ -377,7 +192,7 @@ input[type=range]::-moz-range-thumb{
 </head>
 <body>
 
-<!-- ====== مكتبة الأيقونات (SVG Sprite) ====== -->
+<!-- ====== مكتبة الأيقونات ====== -->
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
   <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/>
@@ -403,7 +218,7 @@ input[type=range]::-moz-range-thumb{
     <path d="M6 6l12 12M18 6L6 18"/>
   </symbol>
   <symbol id="i-deep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-    <path d="M3 14c2-5 4-5 6 0s4 5 6 0 4-5 6 0"/>
+    <path d="M3 14c2-5 4-5 6 0s4-5 6 0 4-5 6 0"/>
   </symbol>
   <symbol id="i-sharp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <path d="M4 18L9 6l3 9 3-9 5 12"/>
@@ -654,13 +469,7 @@ input[type=range]::-moz-range-thumb{
 
 <script>
 /* ======================================================================
-   script.js — منطق التطبيق بالكامل
-   (لفصل المشروع: انقل هذا القسم كاملًا إلى ملف script.js وأشر إليه)
-   --------------------------------------------------------------------
-   الأقسام:
-   1) أدوات مساعدة        2) الحالة العامة       3) محرك الصوت (Web Audio)
-   4) سجل المؤثرات        5) المشغل              6) المصدر (رفع/حذف)
-   7) التسجيل             8) التنزيل (WAV)        9) الواجهة والرسم
+   المنطق بالكامل (يمكن فصله لاحقًا إلى script.js دون أي تعديل)
    ====================================================================== */
 
 /* ---------- 1) أدوات مساعدة ---------- */
@@ -699,10 +508,10 @@ const el = {
 const state = {
   buffer:null, peaks:null, sourceName:'',
   effectId:null, intensity:0.6, pitchSemitones:0,
-  mode:'processed',               // 'processed' | 'original' (مقارنة A/B)
+  mode:'processed',
   playing:false, srcNode:null, chain:null, rate:1,
-  startCtxTime:0, startOffset:0,  // لحظة بدء التشغيل في ساعة السياق + موضع البداية
-  pendingOffset:0, lastPos:0,     // موضع معلّق قبل التشغيل + آخر موضع (للشريط)
+  startCtxTime:0, startOffset:0,
+  pendingOffset:0, lastPos:0,
   rec:{ active:false, recorder:null, analyser:null, start:0, cancelled:false }
 };
 
@@ -720,11 +529,13 @@ function ensureCtx(){
   masterGain.connect(masterAnalyser);
   masterAnalyser.connect(actx.destination);
   buildBarRanges();
-  ensureWorklet(actx);          // تسجيل Bitcrusher (لا ننتظره — يوجد بديل)
+  ensureWorklet(actx);
   return actx;
 }
 
-/* --- Bitcrusher عبر AudioWorklet (يُعرَّف من نص مضمّن) --- */
+/* --- معالجات AudioWorklet: Bitcrusher + مُزيح نغمة حبيبي ---
+   مُزيح النغمة: حبيبتان متداخلتان بتأخير منشاري متناوب ونافذة هان
+   مجموعها 1 دومًا — يحوّل الطبقة دون تغيير السرعة ودون نغمات دخيلة. */
 const WORKLET_CODE = `
 class CrushProcessor extends AudioWorkletProcessor {
   static get parameterDescriptors(){
@@ -736,15 +547,15 @@ class CrushProcessor extends AudioWorkletProcessor {
   constructor(){ super(); this.hold=0; this.count=0; }
   process(inputs, outputs, p){
     const inp=inputs[0], out=outputs[0];
-    if(!inp || inp.length===0) return true;          // صمت عند غياب المدخل
+    if(!inp || inp.length===0){ for(const ch of out) ch.fill(0); return true; }
     const bits=p.bits[0], red=Math.max(1,Math.round(p.reduction[0]));
     const steps=Math.pow(2,bits)-1;
     const src=inp[0], o0=out[0];
     for(let i=0;i<o0.length;i++){
       if(this.count<=0){
         let x=src?src[i]:0;
-        x=Math.round((x*0.5+0.5)*steps)/steps*2-1;   // تكميم عمق البت
-        this.hold=x; this.count=red;                 // تثبيت العينة (downsample)
+        x=Math.round((x*0.5+0.5)*steps)/steps*2-1;
+        this.hold=x; this.count=red;
       }
       o0[i]=this.hold; this.count--;
     }
@@ -752,7 +563,62 @@ class CrushProcessor extends AudioWorkletProcessor {
     return true;
   }
 }
-registerProcessor('crush', CrushProcessor);`;
+registerProcessor('crush', CrushProcessor);
+
+class PitchProcessor extends AudioWorkletProcessor {
+  static get parameterDescriptors(){
+    return [{name:'semitones', defaultValue:0, minValue:-24, maxValue:24, automationRate:'k-rate'}];
+  }
+  constructor(){
+    super();
+    this.win  = Math.round(0.09 * sampleRate);
+    this.size = 1 << Math.ceil(Math.log2(this.win*2 + 2048));
+    this.mask = this.size - 1;
+    this.bufs = null;
+    this.w    = 0;
+    this.phase = 0.5;
+  }
+  read(buf, pos){
+    let p = pos % this.size; if(p < 0) p += this.size;
+    const i0 = p|0, fr = p - i0;
+    const s0 = buf[i0], s1 = buf[(i0+1) & this.mask];
+    return s0 + (s1 - s0) * fr;
+  }
+  process(inputs, outputs, params){
+    const out = outputs[0], inp = inputs[0];
+    const nCh = out.length;
+    if(!this.bufs || this.bufs.length !== nCh){
+      this.bufs = [];
+      for(let c=0;c<nCh;c++) this.bufs.push(new Float32Array(this.size));
+    }
+    if(!inp || inp.length === 0){ for(const ch of out) ch.fill(0); return true; }
+    const shift = Math.pow(2, params.semitones[0]/12);
+    const dPh   = (1 - shift) / this.win;
+    const win   = this.win, mask = this.mask;
+    const frames = out[0].length;
+    const TWO_PI = Math.PI * 2;
+    for(let i=0;i<frames;i++){
+      for(let c=0;c<nCh;c++){
+        const src = inp[Math.min(c, inp.length-1)];
+        this.bufs[c][this.w] = src ? src[i] : 0;
+      }
+      let pa = this.phase, pb = this.phase + 0.5; if(pb >= 1) pb -= 1;
+      const wA = 0.5 - 0.5*Math.cos(TWO_PI*pa);
+      const wB = 0.5 - 0.5*Math.cos(TWO_PI*pb);
+      const dA = pa*win, dB = pb*win;
+      for(let c=0;c<nCh;c++){
+        const buf = this.bufs[c];
+        out[c][i] = wA*this.read(buf, this.w - dA) + wB*this.read(buf, this.w - dB);
+      }
+      this.w = (this.w + 1) & mask;
+      this.phase += dPh;
+      if(this.phase >= 1) this.phase -= 1;
+      else if(this.phase < 0) this.phase += 1;
+    }
+    return true;
+  }
+}
+registerProcessor('pitch-shift', PitchProcessor);`;
 const workletURL = URL.createObjectURL(new Blob([WORKLET_CODE], {type:'application/javascript'}));
 function ensureWorklet(ctx){
   if(!ctx.audioWorklet) return Promise.resolve(false);
@@ -763,10 +629,9 @@ function ensureWorklet(ctx){
   return ctx.__wl;
 }
 
-/* --- عُقد بناء مساعدة (تصلح للسياق الحيّ وسياق المعالجة دون اتصال) --- */
+/* --- عُقد بناء مساعدة --- */
 function gainNode(ctx,v){ const g=ctx.createGain(); g.gain.value=v; return g; }
 
-// حافلة مزج: مسار جاف + نقطة دخول للمسار المعالَج
 function mixBus(ctx, wet){
   const input=ctx.createGain(), output=ctx.createGain();
   const dry=gainNode(ctx, 1-wet), wetG=gainNode(ctx, wet);
@@ -775,53 +640,63 @@ function mixBus(ctx, wet){
   return { input, output, wetIn:wetG };
 }
 
-// إزاحة طبقة حقيقية (granular) بخطّي تأخير متناوبين — دون تغيير السرعة
+/* --- واجهة مُزيح النغمة: Worklet إن توفر، وإلا نسخة عُقد مُصحَّحة --- */
 function pitchShifter(ctx, semitones){
-  const g = ctx.createGain();
-  if (Math.abs(semitones) < 0.01) return { input:g, output:g, stops:[] };
-  const shift = Math.pow(2, semitones/12);
-  const win = 0.05;                             // نطاق التأخير بالثواني
-  const modRate = Math.abs(1-shift)/win;        // تردد مُعدِّل التأخير
-  const up = shift < 1;                         // تنزيل الطبقة => التأخير يصعد
-  const sr = ctx.sampleRate;
-
-  // مصدر طور: دورة منشارية صاعدة 0→1 في بافر صغير يُعاد
-  const ph = ctx.createBuffer(1, 256, sr);
-  const pd = ph.getChannelData(0);
-  for(let i=0;i<256;i++) pd[i]=i/256;
-  // منحنى التبادل: 0.5-0.5cos => مجموع القناتين = 1 دومًا
-  const envCurve = new Float32Array(256);
-  for(let i=0;i<256;i++) envCurve[i] = 0.5 - 0.5*Math.cos(2*Math.PI*(i/256));
-
-  const mkPhase=()=>{ const s=ctx.createBufferSource(); s.buffer=ph; s.loop=true; s.playbackRate.value=modRate; return s; };
-  const phA=mkPhase(), phB=mkPhase();
-
-  const envShaper=ctx.createWaveShaper(); envShaper.curve=envCurve; envShaper.oversample='none';
-
-  const dA=ctx.createDelay(win+0.05), dB=ctx.createDelay(win+0.05);
-  dA.delayTime.value = up ? 0 : win;
-  dB.delayTime.value = up ? 0 : win;
-  const mA=ctx.createGain(), mB=ctx.createGain();
-  mA.gain.value = mB.gain.value = up ? win : -win;
-  phA.connect(mA).connect(dA.delayTime);
-  phB.connect(mB).connect(dB.delayTime);
-
-  const eA=ctx.createGain(), eB=ctx.createGain();
-  eA.gain.value = eB.gain.value = 0;
-  phA.connect(envShaper); envShaper.connect(eA.gain);
-  phB.connect(envShaper); envShaper.connect(eB.gain);
-
   const input=ctx.createGain(), output=ctx.createGain();
-  input.connect(dA); dA.connect(eA).connect(output);
-  input.connect(dB); dB.connect(eB).connect(output);
-
-  const t0=ctx.currentTime;
-  phA.start(t0, 0);
-  phB.start(t0, 0.5/modRate);                   // إزاحة نصف دورة للتناوب
-  return { input, output, stops:[()=>{ try{phA.stop();phB.stop();}catch(e){} }] };
+  if(Math.abs(semitones) < 0.01){ input.connect(output); return {input, output, stops:[]}; }
+  if(ctx.__workletReady && window.AudioWorkletNode){
+    const node=new AudioWorkletNode(ctx,'pitch-shift',{outputChannelCount:[2]});
+    node.parameters.get('semitones').value=semitones;
+    input.connect(node); node.connect(output);
+    return {input, output, stops:[]};
+  }
+  nodePitchShifter(ctx, input, output, semitones);
+  return {input, output, stops:[]};
 }
 
-// تعديل حلقي (Ring Modulation) — قلب صوت الروبوت والفضائي
+/* النسخة البديلة (فقط إن تعذّر AudioWorklet).
+   مفتاح الصحة: بافر الطور طوله دورة كاملة بالضبط (sr*win/|1-shift| عينة)
+   ويُشغَّل بسرعة 1، فيتكرر مُعدِّل التأخير عند التردد الصحيح تمامًا —
+   وكل حبيبة لها موجِّئ نافذة خاص بها (وليس موجِّئًا مشتركًا). */
+function nodePitchShifter(ctx, input, output, semitones){
+  const shift=Math.pow(2, semitones/12);
+  const win=0.09, sr=ctx.sampleRate;
+  const cyc=Math.max(64, Math.round(sr*win/Math.abs(1-shift)));
+  const phBuf=ctx.createBuffer(1, cyc, sr);
+  const pd=phBuf.getChannelData(0);
+  for(let i=0;i<cyc;i++) pd[i]=i/cyc;
+  const mkPh=()=>{ const s=ctx.createBufferSource(); s.buffer=phBuf; s.loop=true; return s; };
+  const phA=mkPh(), phB=mkPh();
+
+  const N=1024, curve=new Float32Array(N);
+  for(let i=0;i<N;i++){
+    const p=clamp(2*i/(N-1)-1, 0, 1);
+    curve[i]=0.5-0.5*Math.cos(2*Math.PI*p);
+  }
+
+  const down = shift < 1;
+  const mkGrain=(base,dir)=>{
+    const d=ctx.createDelay(win+0.05); d.delayTime.value=base;
+    const m=ctx.createGain(); m.gain.value=dir*win;
+    const e=ctx.createGain(); e.gain.value=0;
+    const sh=ctx.createWaveShaper(); sh.curve=curve;   // موجِّئ مستقل لكل حبيبة
+    return {d,m,e,sh};
+  };
+  const A=mkGrain(down?0:win, down?1:-1);
+  const B=mkGrain(down?0:win, down?1:-1);
+  phA.connect(A.m).connect(A.d.delayTime);
+  phA.connect(A.sh); A.sh.connect(A.e.gain);
+  phB.connect(B.m).connect(B.d.delayTime);
+  phB.connect(B.sh); B.sh.connect(B.e.gain);
+  input.connect(A.d); A.d.connect(A.e).connect(output);
+  input.connect(B.d); B.d.connect(B.e).connect(output);
+  const t0=ctx.currentTime;
+  phA.start(t0, 0);
+  phB.start(t0, (cyc/2)/sr);   // إزاحة نصف دورة بالضبط
+  const stops=()=>{ try{phA.stop();phB.stop();}catch(e){} };
+  return stops;
+}
+
 function ringMod(ctx, freq, mix){
   const input=ctx.createGain(), output=ctx.createGain();
   const mod=ctx.createGain(); mod.gain.value=0;
@@ -833,7 +708,6 @@ function ringMod(ctx, freq, mix){
   return { input, output, stops:[()=>{ try{osc.stop();}catch(e){} }] };
 }
 
-// فايبراتو: تأخير مُتذبذب يغيّر الطبلة ذهابًا وإيابًا
 function vibrato(ctx, depthSec, rateHz){
   const d=ctx.createDelay(0.2); d.delayTime.value=depthSec;
   const osc=ctx.createOscillator(); osc.frequency.value=rateHz;
@@ -842,14 +716,12 @@ function vibrato(ctx, depthSec, rateHz){
   return { input:d, output:d, stops:[()=>{ try{osc.stop();}catch(e){} }] };
 }
 
-// منحنى تشبع (TanH) لصوت الراديو المُشبع
 function saturateCurve(amount){
   const k=1+amount*18, n=1024, c=new Float32Array(n);
   for(let i=0;i<n;i++){ const x=i/(n-1)*2-1; c[i]=Math.tanh(k*x)/Math.tanh(k); }
   return c;
 }
 
-// ضجيج خلفية (هسيس الراديو)
 function noiseSource(ctx, level){
   const len=ctx.sampleRate, buf=ctx.createBuffer(1,len,ctx.sampleRate);
   const d=buf.getChannelData(0);
@@ -860,7 +732,6 @@ function noiseSource(ctx, level){
   return { node:g, dispose(){ try{s.stop();}catch(e){} } };
 }
 
-// بديل تكميم بسيط عندما لا يتاح AudioWorklet
 function crushCurve(bits){
   const steps=Math.pow(2,bits)-1, n=2048, c=new Float32Array(n);
   for(let i=0;i<n;i++){ const x=i/(n-1)*2-1; c[i]=Math.round((x*0.5+0.5)*steps)/steps*2-1; }
@@ -870,10 +741,7 @@ function crushCurve(bits){
 function dryChain(ctx){ const g=ctx.createGain(); return { input:g, output:g, stops:[] }; }
 function disposeChain(chain){ (chain.stops||[]).forEach(f=>{ try{f();}catch(e){} }); }
 
-/* ---------- 4) سجل المؤثرات ----------
-   كل تأثير يبني سلسلة معالجة مستقلة تعمل في أي AudioContext
-   (الحيّ للمعاينة، وOfflineAudioContext للتنزيل) — نقطة توسّع
-   مستقبلية: يمكن استبدال build() بنداء Backend للمعالجة المتقدمة. */
+/* ---------- 4) سجل المؤثرات ---------- */
 const EFFECTS = {
   deep:{ name:'صوت عميق', file:'deep', tail:0.15,
     build(ctx,i){
@@ -902,9 +770,9 @@ const EFFECTS = {
       return { input:bus.input, output:bus.output, stops:ps.stops };
     }},
   pitch:{ name:'تغيير الطبقة', file:'pitch', tail:0.12,
-    build(ctx,i){
+    build(ctx,i,st){
       const bus=mixBus(ctx, 0.3+0.7*i);
-      const ps=pitchShifter(ctx, state.pitchSemitones);
+      const ps=pitchShifter(ctx, st!=null?st:state.pitchSemitones);
       bus.input.connect(ps.input); ps.output.connect(bus.wetIn);
       return { input:bus.input, output:bus.output, stops:ps.stops };
     }},
@@ -999,13 +867,18 @@ function currentTail(){
 }
 
 /* ---------- 5) المشغل ---------- */
-function startPlayback(fromPos){
+let playToken=0;
+
+async function startPlayback(fromPos){
   if(!state.buffer) return;
   const ctx=ensureCtx();
+  const reqToken=++playToken;
   ctx.resume().catch(()=>{});
+  await ensureWorklet(ctx);          // أول مرة فقط — ثم يُخزَّن
+  if(reqToken!==playToken) return;   // صار تشغيل/إيقاف أحدث أثناء الانتظار
   stopPlayback(true);
   const rate=currentRate();
-  const chain = (state.mode==='processed' && state.effectId)
+  const chain=(state.mode==='processed' && state.effectId)
     ? EFFECTS[state.effectId].build(ctx, state.intensity, state.pitchSemitones)
     : dryChain(ctx);
   const src=ctx.createBufferSource();
@@ -1014,7 +887,7 @@ function startPlayback(fromPos){
   src.connect(chain.input);
   chain.output.connect(masterGain);
   const pos=clamp(fromPos||0, 0, Math.max(0, state.buffer.duration-0.01));
-  src.onended=()=>{ if(src.__stopped) return;      // تجاهل الإيقاف اليدوي
+  src.onended=()=>{ if(src.__stopped) return;
     state.playing=false; state.pendingOffset=0; state.lastPos=0;
     disposeChain(chain); state.chain=null; state.srcNode=null; syncTransport(); };
   src.start(0, pos);
@@ -1024,6 +897,7 @@ function startPlayback(fromPos){
   syncTransport();
 }
 function stopPlayback(silent=false){
+  playToken++;                       // يُبطل أي startPlayback معلّق
   if(state.srcNode){ state.srcNode.__stopped=true; try{ state.srcNode.stop(); }catch(e){} }
   if(state.chain) disposeChain(state.chain);
   state.chain=null; state.srcNode=null;
@@ -1091,7 +965,11 @@ async function loadFile(file){
   busy(false);
 }
 
-/* ---------- 7) التسجيل ---------- */
+/* ---------- 7) التسجيل ----------
+   [إصلاح] hideRec معرّفة الآن، والمعالجون محصّنون، والحالة تُصفَّر دائمًا
+   بعد كل تسجيل — فيمكن التسجيل مرات لا نهائية. */
+function hideRec(){ el.recOverlay.hidden=true; }
+
 async function startRecording(){
   if(state.rec.active) return;
   if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
@@ -1108,13 +986,23 @@ async function startRecording(){
     const mt=mimes.find(m=>MediaRecorder.isTypeSupported(m));
     const rec=new MediaRecorder(stream, mt?{mimeType:mt}:undefined);
     const chunks=[];
+    const cleanup=()=>{
+      try{ stream.getTracks().forEach(t=>t.stop()); }catch(e){}
+      state.rec.active=false; state.rec.recorder=null; state.rec.analyser=null;
+      syncTransport();
+    };
     rec.ondataavailable=e=>{ if(e.data && e.data.size) chunks.push(e.data); };
     rec.onstop=()=>{
-      stream.getTracks().forEach(t=>t.stop());
       hideRec();
-      if(state.rec.cancelled){ state.rec.active=false; syncTransport(); toast('أُلغي التسجيل','warn'); return; }
-      state.rec.active=false; syncTransport();
+      const wasCancelled=state.rec.cancelled;
+      cleanup();
+      if(wasCancelled){ toast('أُلغي التسجيل','warn'); return; }
       finalizeRecording(chunks);
+    };
+    rec.onerror=()=>{
+      hideRec();
+      cleanup();
+      toast('حدث خطأ أثناء التسجيل — حاول مجددًا','err');
     };
     rec.start(120);
     state.rec={active:true, recorder:rec, analyser:an, start:performance.now(), cancelled:false};
@@ -1127,16 +1015,31 @@ async function startRecording(){
     toast(msg,'err');
   }
 }
-function stopRecording(){ if(state.rec.active){ el.recOverlay.hidden=true; state.rec.recorder.stop(); } }
-function cancelRecording(){ if(state.rec.active){ state.rec.cancelled=true; el.recOverlay.hidden=true; state.rec.recorder.stop(); } }
+function stopRecording(){
+  if(state.rec.active && state.rec.recorder){
+    try{ state.rec.recorder.stop(); }
+    catch(e){ hideRec(); }
+  }
+}
+function cancelRecording(){
+  if(state.rec.active && state.rec.recorder){
+    state.rec.cancelled=true;
+    try{ state.rec.recorder.stop(); }
+    catch(e){ hideRec(); }
+  }
+}
 async function finalizeRecording(chunks){
+  if(!chunks.length){ toast('التسجيل فارغ — حاول مجددًا','err'); return; }
   busy(true,'جارٍ تجهيز التسجيل…');
   try{
     const blob=new Blob(chunks,{type:(chunks[0]&&chunks[0].type)||'audio/webm'});
     const ab=await blob.arrayBuffer();
     const buf=await ensureCtx().decodeAudioData(ab);
     setSource(buf,'تسجيل ميكروفون — '+new Date().toLocaleTimeString('ar'));
-  }catch(e){ console.error(e); toast('تعذّرت قراءة التسجيل — حاول مجددًا','err'); }
+  }catch(e){
+    console.error(e);
+    toast('تعذّرت قراءة التسجيل — حاول التسجيل مجددًا','err');
+  }
   busy(false);
 }
 
@@ -1168,12 +1071,12 @@ async function downloadProcessed(){
   if(!state.buffer){ toast('لا يوجد صوت لتنزيله بعد — سجّل أو ارفع ملفًا','warn'); return; }
   el.btnDownload.disabled=true;
   busy(true,'جارٍ معالجة الصوت داخل المتصفح…');
-  await new Promise(r=>setTimeout(r,40));      // فرصة لإظهار النافذة
+  await new Promise(r=>setTimeout(r,40));
   try{
     const rate=currentRate(), tail=currentTail();
     const length=Math.max(1, Math.ceil((state.buffer.duration/rate + tail) * state.buffer.sampleRate));
     const off=new OfflineAudioContext(2, length, state.buffer.sampleRate);
-    await ensureWorklet(off);                  // لنوع "التشويش الإلكتروني"
+    await ensureWorklet(off);        // نفس محرك المعاينة — النتيجة تطابقها
     const src=off.createBufferSource();
     src.buffer=state.buffer; src.playbackRate.value=rate;
     const chain=(state.mode==='processed' && state.effectId)
@@ -1255,7 +1158,7 @@ function drawWave(frac){
   if(!state.peaks) return;
   const N=state.peaks.length, bw=W/N, cut=Math.floor(frac*N);
   for(let i=0;i<N;i++){
-    const x=W-(i+1)*bw;                       // RTL: البداية من اليمين
+    const x=W-(i+1)*bw;
     const v=Math.max(0.02,state.peaks[i]);
     const h=v*(H-8*D), y=(H-h)/2;
     g.fillStyle = i<cut ? 'rgba(255,178,36,.9)' : 'rgba(244,238,227,.14)';
@@ -1279,7 +1182,7 @@ function drawSpectrum(t){
       let m=0; for(let b=b0;b<b1&&b<n;b++) if(fdBuf[b]>m) m=fdBuf[b];
       const v=m/255, h=Math.max(2*D, v*(H-10*D));
       g.fillStyle = v>0.85 ? 'rgba(255,75,62,.9)' : `rgba(255,178,36,${0.22+0.7*v})`;
-      g.fillRect(W-(i+1)*bw+bw*0.15, H-3*D-h, bw*0.7, h);   // الترددات المنخفضة يمينًا
+      g.fillRect(W-(i+1)*bw+bw*0.15, H-3*D-h, bw*0.7, h);
     }
   } else {
     g.strokeStyle='rgba(255,178,36,.3)'; g.lineWidth=1.5*D;
@@ -1294,7 +1197,7 @@ function drawSpectrum(t){
   }
 }
 
-/* --- مقياس VU (يُبنى برمجيًا داخل SVG) --- */
+/* --- مقياس VU --- */
 let vuNeedleEl=null, vuCur=-50, vuTargetDb=-24, nextWander=0;
 function buildVU(){
   const svg=el.vuSvg, NS='http://www.w3.org/2000/svg', cx=120, cy=128;
@@ -1333,7 +1236,7 @@ function updateVU(now){
   let db=null;
   if(state.rec.active && state.rec.analyser) db=rmsDb(state.rec.analyser);
   else if(state.playing && masterAnalyser)   db=rmsDb(masterAnalyser);
-  if(db===null){                             // خمول: تمايل لطيف حيّ
+  if(db===null){
     if(now>nextWander){
       vuTargetDb=-26+Math.random()*11+(Math.random()<0.15?7:0);
       nextWander=now+320+Math.random()*750;
@@ -1374,12 +1277,12 @@ function frame(now){
   }
 }
 
-/* --- سحب شريط الموجة (Seek) --- */
+/* --- سحب شريط الموجة --- */
 let seeking=false;
 function doSeek(e){
   if(!state.buffer) return;
   const r=el.wf.getBoundingClientRect();
-  const f=clamp(1-(e.clientX-r.left)/r.width, 0, 1);   // RTL: البداية يمين
+  const f=clamp(1-(e.clientX-r.left)/r.width, 0, 1);
   const pos=f*state.buffer.duration;
   if(state.playing) startPlayback(pos);
   else { state.pendingOffset=pos; state.lastPos=pos; }
@@ -1393,8 +1296,8 @@ function init(){
   requestAnimationFrame(frame);
 
   el.btnRecord.addEventListener('click', startRecording);
-  $('#btnRecStop').addEventListener('click', stopRecording);
-  $('#btnRecCancel').addEventListener('click', cancelRecording);
+  el.btnRecStop.addEventListener('click', stopRecording);
+  el.btnRecCancel.addEventListener('click', cancelRecording);
 
   el.btnUpload.addEventListener('click', ()=>el.fileInput.click());
   el.fileInput.addEventListener('change', e=>{
